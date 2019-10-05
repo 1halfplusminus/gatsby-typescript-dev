@@ -30,7 +30,9 @@
   // Add the IDs of extensions you want installed when the container is created in the array below.
   "extensions": [
     "esbenp.prettier-vscode",
-    "ms-vscode.vscode-typescript-tslint-plugin"
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "kumar-harsh.graphql-for-vscode",
+    "jpoissonnier.vscode-styled-components"
   ],
   "appPort": [
     8000
