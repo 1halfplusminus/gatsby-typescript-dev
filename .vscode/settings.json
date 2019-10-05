@@ -1,0 +1,16 @@
+{
+  "files.exclude": {},
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll.tslint": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // Enable per-language
+  "[typescript]": {
+      "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true
+  }
+}
