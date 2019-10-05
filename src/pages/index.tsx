@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import SEO from "../components/seo";
+import SEO from "../gatsby/seo";
 
 const Title = styled.h1`
   margin: 0 0 12px 0;
@@ -9,10 +9,10 @@ const Title = styled.h1`
 `;
 
 const IndexPage = () => (
-  <div>
+  <>
     <SEO title="Home" />
     <Title>Hello world</Title>
-  </div>
+  </>
 );
 
 export default IndexPage;

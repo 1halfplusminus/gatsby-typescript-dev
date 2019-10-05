@@ -32,10 +32,13 @@
     "esbenp.prettier-vscode",
     "ms-vscode.vscode-typescript-tslint-plugin",
     "kumar-harsh.graphql-for-vscode",
-    "jpoissonnier.vscode-styled-components"
+    "jpoissonnier.vscode-styled-components",
+    "eamodio.gitlens",
+    "donjayamanne.githistory"
   ],
   "appPort": [
-    8000
+    8000,
+    6006
   ],
   // Copy the contents to the correct location and set permissions
   "postCreateCommand": "mkdir -p ~/.ssh && cp -r /tmp/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*"
