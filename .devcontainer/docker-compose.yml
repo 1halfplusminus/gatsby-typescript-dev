@@ -27,6 +27,7 @@ services:
       - node_modules:/workspace/node_modules
       - /workspace/.cache
       - /workspace/public
+      - ~/.ssh:/tmp/.ssh-localhost:ro
       # Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker-compose for details.
       # - /var/run/docker.sock:/var/run/docker.sock
 

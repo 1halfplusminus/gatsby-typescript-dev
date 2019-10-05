@@ -34,5 +34,7 @@
   ],
   "appPort": [
     8000
-  ]
+  ],
+  // Copy the contents to the correct location and set permissions
+  "postCreateCommand": "mkdir -p ~/.ssh && cp -r /tmp/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*"
 }
