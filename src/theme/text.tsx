@@ -5,6 +5,7 @@ import {
   fontSize,
   FontSizeProps,
   fontWeight,
+  FontWeightProps,
   lineHeight,
   LineHeightProps,
   space,
@@ -16,7 +17,8 @@ export type TextProps = SpaceProps &
   FontSizeProps &
   LineHeightProps &
   ColorProps &
-  FontFamilyProps;
+  FontFamilyProps &
+  FontWeightProps;
 
 export const Text = styled.div<TextProps>`
   ${space}
@@ -29,6 +31,13 @@ export const Text = styled.div<TextProps>`
 
 export const Link = styled(Text.withComponent("a"))`
   text-decoration: none;
+  :hover {
+    color: ${(props) => props.theme.black};
+  }
 `;
+
+Link.defaultProps = {
+  color: "black",
+};
 
 export default Text;
