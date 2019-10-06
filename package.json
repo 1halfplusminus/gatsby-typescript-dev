@@ -5,7 +5,9 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@hot-loader/react-dom": "^16.10.2",
     "@types/styled-components": "^4.1.19",
+    "@types/styled-system": "^5.1.2",
     "babel-plugin-styled-components": "^1.10.6",
     "gatsby": "^2.15.29",
     "gatsby-image": "^2.2.24",
@@ -21,7 +23,9 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.1",
+    "react-hot-loader": "^4.12.14",
     "styled-components": "^4.4.0",
+    "styled-system": "^5.1.2",
     "typescript": "^3.6.3"
   },
   "devDependencies": {

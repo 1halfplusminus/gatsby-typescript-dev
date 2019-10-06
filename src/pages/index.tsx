@@ -1,17 +1,12 @@
 import React from "react";
-import styled from "styled-components";
 import SEO from "../gatsby/seo";
-
-const Title = styled.h1`
-  margin: 0 0 12px 0;
-  padding: 0;
-  color: red;
-`;
+import { Title1, Title2 } from "../theme/title";
 
 const IndexPage = () => (
   <>
     <SEO title="Home" />
-    <Title>Hello world</Title>
+    <Title1>Hello world 2</Title1>
+    <Title2> Test </Title2>
   </>
 );
 

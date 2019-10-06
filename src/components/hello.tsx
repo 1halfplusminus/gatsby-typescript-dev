@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import { Title1 } from "../theme/title";
 
 export type HelloProps = Partial<typeof defaultProps> & {
   /**
@@ -15,13 +15,7 @@ const defaultProps = {
   name: "World",
 };
 
-const Title = styled.h1`
-  margin: 0 0 12px 0;
-  padding: 0;
-  color: red;
-`;
-
-export const Hello = ({ name }: HelloProps) => <Title> Hello {name}</Title>;
+export const Hello = ({ name }: HelloProps) => <Title1> Hello {name}</Title1>;
 
 Hello.defaultProps = defaultProps;
 
