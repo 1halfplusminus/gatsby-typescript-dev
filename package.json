@@ -6,8 +6,6 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "@hot-loader/react-dom": "^16.9.0",
-    "@types/styled-components": "^4.1.19",
-    "@types/styled-system": "^5.1.2",
     "babel-plugin-styled-components": "^1.10.6",
     "gatsby": "^2.15.29",
     "gatsby-image": "^2.2.24",
@@ -25,6 +23,7 @@
     "netlify-cms-app": "^2.9.7",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
+    "react-apollo": "^3.1.2",
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.1",
     "react-hot-loader": "^4.12.14",
@@ -34,6 +33,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
+    "@graphql-codegen/cli": "^1.8.1",
+    "@graphql-codegen/introspection": "1.8.1",
+    "@graphql-codegen/typescript": "^1.8.1",
+    "@graphql-codegen/typescript-operations": "^1.8.1",
+    "@graphql-codegen/typescript-react-apollo": "1.8.1",
     "@storybook/addon-actions": "^5.2.1",
     "@storybook/addon-info": "^5.2.1",
     "@storybook/addon-links": "^5.2.1",
@@ -45,14 +49,18 @@
     "@types/react-dom": "^16.9.1",
     "@types/react-helmet": "^5.0.11",
     "@types/storybook__react": "^4.0.2",
+    "@types/styled-components": "^4.1.19",
+    "@types/styled-system": "^5.1.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "eslint-plugin-flowtype": "^4.3.0",
+    "graphql": "^14.5.8",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "react-docgen-typescript-loader": "^3.3.0",
     "ts-jest": "^24.1.0",
     "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.1.0"
   },
   "keywords": [
@@ -67,7 +75,9 @@
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \"",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "graphql-types": "graphql-codegen --config codegen.yml",
+    "tsc:build": "tsc -w"
   },
   "repository": {
     "type": "git",

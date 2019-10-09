@@ -9,11 +9,22 @@ import { graphql, useStaticQuery } from "gatsby";
 import PropTypes from "prop-types";
 import React from "react";
 import { Helmet } from "react-helmet";
+import { SeoQueryQuery } from "../graphqlTypes";
 
-function SEO({ description, lang, meta, title }) {
-  const { site } = useStaticQuery(
+function SEO({
+  description,
+  lang,
+  meta,
+  title,
+}: {
+  description: string
+  lang: string
+  meta: Array<{ name: string; content: string }>
+  title: string,
+}) {
+  const { site } = useStaticQuery<SeoQueryQuery>(
     graphql`
-      query {
+      query SEOQuery {
         site {
           siteMetadata {
             title

@@ -1,0 +1,17 @@
+schema: http://localhost:8000/___graphql
+documents:
+  - ./src/**/*.{ts,tsx}
+  - ./node_modules/gatsby-*/**/*.js
+   - ./gatsby-node.ts
+config:
+  namingConvention:
+    enumValues: keep
+generates:
+  ./src/graphqlTypes.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+hooks:
+  afterAllFileWrite:
+    - tslint --fix
+    - prettier --write

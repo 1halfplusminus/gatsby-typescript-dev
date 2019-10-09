@@ -34,7 +34,8 @@
     "kumar-harsh.graphql-for-vscode",
     "jpoissonnier.vscode-styled-components",
     "eamodio.gitlens",
-    "donjayamanne.githistory"
+    "donjayamanne.githistory",
+    "prisma.vscode-graphql"
   ],
   "appPort": [
     8000,

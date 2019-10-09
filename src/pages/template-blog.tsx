@@ -1,8 +1,8 @@
 import { graphql } from "gatsby";
 import React from "react";
+import { BlogPostByIdQuery } from "../graphqlTypes";
 
-export default function Template({ data }) {
-  console.log(data);
+export default function Template({ data }: { data: BlogPostByIdQuery }) {
   const { markdownRemark } = data; // data.markdownRemark holds our post data
   const { frontmatter, html } = markdownRemark;
   return (
