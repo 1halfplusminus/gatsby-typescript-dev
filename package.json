@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "gatsby-blog-cms",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Dart Uchiwa <dartuchiwa@gmail.com>",
   "dependencies": {
     "@hot-loader/react-dom": "^16.10.2",
     "babel-plugin-styled-components": "^1.10.6",
