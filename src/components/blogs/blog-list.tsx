@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react"
-import { Box } from "../../theme/box"
-import { Link, Text } from "../../theme/text"
-import { Title2 } from "../../theme/title"
+import { Box } from "../core/box"
+import { Link, Text } from "../core/text"
+import { Title2 } from "../core/title"
 
 export interface BlogListProps {
   title: string

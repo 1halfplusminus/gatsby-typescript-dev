@@ -1,11 +1,11 @@
 import { graphql } from "gatsby"
 import React from "react"
 import { BlogList } from "../components/blogs/blog-list"
+import { Link } from "../components/core/text"
 import PageTitle from "../components/page/page-title"
 import SEO from "../gatsby/seo"
 import { BlogPostsIndexQuery } from "../graphqlTypes"
 import { styled } from "../theme"
-import { Link } from "../theme/text"
 
 const Layout = styled.div`
   margin-left: auto;
