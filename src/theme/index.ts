@@ -1,5 +1,4 @@
 import { GenericFamily } from "csstype"
-import baseStyled, { ThemedStyledInterface } from "styled-components"
 import { ResponsiveValue } from "styled-system"
 
 const black = "#000" as const
@@ -47,5 +46,3 @@ export interface TextColorProps {
 }
 
 export default theme
-
-export const styled = baseStyled as ThemedStyledInterface<Theme>

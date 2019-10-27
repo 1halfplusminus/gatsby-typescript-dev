@@ -1,4 +1,3 @@
-import "csstype"
 import "styled-components"
 import "styled-system"
 import { colors, Theme } from "./theme"
