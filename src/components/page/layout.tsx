@@ -1,8 +1,24 @@
+import React, { PropsWithChildren } from "react"
+import Helmet from "react-helmet"
 import styled from "styled-components"
-
-export const Layout = styled.div`
+const StyledLayout = styled.div`
   margin-left: auto;
   margin-right: auto;
-  max-width: 42rem;
-  padding: 2.625rem 1.3125rem;
 `
+
+export const Layout = ({ children }: PropsWithChildren<{}>) => {
+  return (
+    <StyledLayout>
+      <Helmet>
+        <style type="text/css">{`
+            body, html {
+              height: 100%;
+              font-family: "Merriweather Black", sans-serif;
+              margin: 0;
+            }
+        `}</style>
+      </Helmet>
+      {children}
+    </StyledLayout>
+  )
+}

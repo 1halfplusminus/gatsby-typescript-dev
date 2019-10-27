@@ -1,4 +1,3 @@
-import { ComponentType } from "react"
 import { ViewProps } from "react-native"
 import styled from "styled-components"
 import {
@@ -10,6 +9,8 @@ import {
   FontSizeProps,
   overflow,
   OverflowProps,
+  position,
+  PositionProps,
   space,
   SpaceProps,
   width,
@@ -22,7 +23,8 @@ export type BoxProps = SpaceProps &
   ColorProps &
   ViewProps &
   OverflowProps &
-  FlexboxProps
+  FlexboxProps &
+  PositionProps
 
 export const Box = styled.div<BoxProps>`
   ${space}
@@ -31,13 +33,15 @@ export const Box = styled.div<BoxProps>`
   ${color}
   ${overflow}
   ${flexbox}
+  ${position}
   flex-shrink: 1;
+  display: flex;
 `
 
-export const FlexRow = styled<ComponentType<BoxProps>>(Box)`
+export const FlexRow = styled(Box)`
   flex-direction: row;
 `
 
-export const FlexColumn = styled<ComponentType<BoxProps>>(Box)`
+export const FlexColumn = styled(Box)`
   flex-direction: column;
 `

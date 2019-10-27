@@ -7,7 +7,6 @@
 // You can delete this file if you're not using it
 import React, { ReactChild } from "react"
 import { ThemeProvider } from "styled-components"
-import "./src/styled.d.ts"
 import theme from "./src/theme"
 
 export const wrapRootElement = ({ element }: { element: ReactChild }) => (

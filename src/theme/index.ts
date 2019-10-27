@@ -8,14 +8,34 @@ export const colors = {
   h1: "#007acc" as const,
   h2: black,
   a: black,
-  main: "red" as const,
+  primary: "#2dbe60" as const,
 } as const
 
+export interface BreakPoint {
+  [key: number]: string | number
+  sm?: string | number
+  md?: string | number
+  lg?: string | number
+  xl?: string | number
+}
+const breakpoints = ["576px", "768px", "992px", "1200px"] as BreakPoint
+
+breakpoints.sm = breakpoints[0]
+breakpoints.md = breakpoints[1]
+breakpoints.lg = breakpoints[2]
+breakpoints.xl = breakpoints[3]
+
 const theme = {
-  breakpoints: ["576px", "768px", "992px", "1200px", "1800px"],
+  breakpoints,
+  mediaQueries: {
+    sm: `@media screen and (max-width: ${breakpoints[0]})`,
+    md: `@media screen and (max-width: ${breakpoints[1]})`,
+    lg: `@media screen and (max-width: ${breakpoints[2]})`,
+    xl: `@media screen and (max-width: ${breakpoints[3]})`,
+  },
   defaultWidths: [1, 1, 1, 7 / 8, 3 / 4, 1 / 2],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
-  fontSizes: [12, 14, 16, 24, 32, 48, 64, 96, "3.95285rem"],
+  fontSizes: [12, 13, 15, 24, 32, 48, 64, 96, "3.95285rem"],
   fontWeights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
   fonts: {
     serif: "'Merriweather','Georgia',serif",
