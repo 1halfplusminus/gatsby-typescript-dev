@@ -137,6 +137,23 @@ const Navbar = styled(Box)<{ responsive?: boolean }>`
         z-index: 1000;
       }
     `}
+  :before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100vw;
+    height: 100%;
+    z-index: -1;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    ${styledSystemCss({
+      backgroundColor: "white",
+    })}
+  }
 `
 Navbar.defaultProps = {
   responsive: true,

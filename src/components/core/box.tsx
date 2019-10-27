@@ -7,6 +7,8 @@ import {
   FlexboxProps,
   fontSize,
   FontSizeProps,
+  height,
+  HeightProps,
   overflow,
   OverflowProps,
   position,
@@ -24,7 +26,8 @@ export type BoxProps = SpaceProps &
   ViewProps &
   OverflowProps &
   FlexboxProps &
-  PositionProps
+  PositionProps &
+  HeightProps
 
 export const Box = styled.div<BoxProps>`
   ${space}
@@ -34,6 +37,7 @@ export const Box = styled.div<BoxProps>`
   ${overflow}
   ${flexbox}
   ${position}
+  ${height}
   flex-shrink: 1;
   display: flex;
 `
