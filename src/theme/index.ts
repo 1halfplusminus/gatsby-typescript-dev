@@ -10,7 +10,7 @@ export const colors = {
   a: black,
   primary,
   blue: "#2196F3" as const,
-  primaries: ["#FB8C00"],
+  primaries: ["#E53935"],
   red: "#F44336",
   background: "#FF5722" as const,
   white: "#FAFAFA",
