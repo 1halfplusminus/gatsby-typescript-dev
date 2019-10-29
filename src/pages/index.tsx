@@ -114,14 +114,12 @@ export const MessageForm = () => {
     handleSubmit,
     errors,
     touched,
-    setFieldTouched,
   } = useFormikContext<typeof initialValues>()
   const onPhoneNumberChange = (value: string) => {
     setFieldValue("destinataire", value)
   }
   const onReCaptchaChange = (token: string | null) => {
-    setFieldValue("captcha", token)
-
+    setFieldValue("captcha", token ? token : "")
     return
   }
   const calculeRemainingCharacter = useMemo(
