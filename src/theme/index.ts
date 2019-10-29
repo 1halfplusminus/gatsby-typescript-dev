@@ -2,17 +2,18 @@ import { GenericFamily } from "csstype"
 import { ResponsiveValue } from "styled-system"
 
 const black = "#000" as const
-
+const primary = "#F44336" as const
 export const colors = {
   black,
-  h1: "#FB9500" as const,
+  h1: primary,
   h2: black,
   a: black,
-  primary: "#F57C00" as const,
+  primary,
   blue: "#2196F3" as const,
   primaries: ["#FB8C00"],
   red: "#F44336",
-  background: "#FF9800" as const,
+  background: "#FF5722" as const,
+  white: "#FAFAFA",
 } as const
 
 export interface BreakPoint {
