@@ -12,7 +12,7 @@ export const colors = {
   blue: "#2196F3" as const,
   primaries: ["#E53935"],
   red: "#F44336",
-  background: "#FF5722" as const,
+  background: "#F5F5F5" as const,
   white: "#FAFAFA",
 } as const
 
