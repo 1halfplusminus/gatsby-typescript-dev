@@ -4,9 +4,9 @@ backend:
 media_folder: static/assets
 public_folder: assets
 collections:
-  - name: blog
-    label: Blog
-    folder: "src/blogs"
+  - name: page
+    label: Page
+    folder: "src/pages"
     create: true
     fields:
       - { name: date, label: Date, widget: datetime }

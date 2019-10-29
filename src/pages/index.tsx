@@ -6,14 +6,7 @@ import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input"
 import fr from "react-phone-number-input/locale/fr"
 import "react-phone-number-input/style.css"
 import styled from "styled-components"
-import {
-  color,
-  ColorProps,
-  FlexProps,
-  SpaceProps,
-  textAlign,
-  TextAlignProps,
-} from "styled-system"
+import { color, ColorProps, FlexProps, SpaceProps, textAlign, TextAlignProps } from "styled-system"
 import Swal from "sweetalert2"
 import * as Yup from "yup"
 import { Box, FlexColumn } from "../components/core/box"

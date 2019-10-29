@@ -95,7 +95,8 @@
     "storybook": "npx --node-arg '-r ./babel-register.js' start-storybook -p 6006",
     "build-storybook": "npx --node-arg '-r ./babel-register.js' build-storybook",
     "graphql-types": "graphql-codegen --config codegen.yml",
-    "build:types": "tsc --emitDeclarationOnly"
+    "build-types": "tsc --emitDeclarationOnly",
+    "deploy-surge": "surge public"
   },
   "repository": {
     "type": "git",
