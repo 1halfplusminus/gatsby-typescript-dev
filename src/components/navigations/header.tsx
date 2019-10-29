@@ -76,8 +76,9 @@ const NavbarToggler = styled(Button)<{ collapsed: boolean }>`
 const BoxHeader = Box.withComponent("header")
 
 const HeaderWrapper = styled(BoxHeader)`
-  border-bottom: 1px solid;
-  height: 81px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  height: 85px;
   justify-content: center;
   line-height: 22px;
   font-size: 14px;

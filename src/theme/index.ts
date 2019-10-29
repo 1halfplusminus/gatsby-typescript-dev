@@ -8,10 +8,11 @@ export const colors = {
   h1: "#FB9500" as const,
   h2: black,
   a: black,
-  primary: "#FF9800" as const,
+  primary: "#F57C00" as const,
   blue: "#2196F3" as const,
   primaries: ["#FB8C00"],
   red: "#F44336",
+  background: "#FF9800" as const,
 } as const
 
 export interface BreakPoint {

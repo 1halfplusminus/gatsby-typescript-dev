@@ -1,3 +1,4 @@
+import css from "@styled-system/css"
 import React, { PropsWithChildren } from "react"
 import Helmet from "react-helmet"
 import styled from "styled-components"
@@ -8,7 +9,7 @@ const StyledLayout = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: rgb(230, 123, 0);
+  ${css({ backgroundColor: "background" })}
 `
 
 export const Layout = ({ children }: PropsWithChildren<{}>) => {

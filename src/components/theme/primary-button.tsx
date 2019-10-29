@@ -14,7 +14,7 @@ export const PrimaryButton = styled(Button)`
   ${css({
     fontSize: [2],
     backgroundColor: "primary",
-    color: "black",
+    color: "white",
     paddingLeft: 3,
     paddingRight: 3,
     paddingTop: 2,
