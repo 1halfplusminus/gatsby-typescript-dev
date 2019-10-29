@@ -1,18 +1,19 @@
 import styledSystemCss from "@styled-system/css"
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
+import { background, BackgroundProps } from "styled-system"
 import { Box, FlexRow } from "../core/box"
 import { Button } from "../core/button"
 import { PrimaryButton } from "../theme/primary-button"
 
-const NavbarToggleItem = styled.span`
+const NavbarToggleItem = styled.span<BackgroundProps>`
   display: none;
+  ${background};
   @media screen and (max-width: ${props => props.theme.breakpoints.lg}) {
     display: block;
     position: absolute;
     height: 2px;
     width: 100%;
-    background: #3c3636;
     border-radius: 2px;
     opacity: 1;
     left: 0;
@@ -75,8 +76,7 @@ const NavbarToggler = styled(Button)<{ collapsed: boolean }>`
 const BoxHeader = Box.withComponent("header")
 
 const HeaderWrapper = styled(BoxHeader)`
-  background: #fff;
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid;
   height: 81px;
   justify-content: center;
   line-height: 22px;
@@ -150,13 +150,15 @@ const Navbar = styled(Box)<{ responsive?: boolean }>`
     transform: translateX(-50%);
     -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-    ${styledSystemCss({
-      backgroundColor: "white",
-    })}
+    ${({ backgroundColor }) =>
+      styledSystemCss({
+        backgroundColor: backgroundColor ? backgroundColor : ("white" as any),
+      })}
   }
 `
 Navbar.defaultProps = {
   responsive: true,
+  backgroundColor: "primary",
 }
 const NavbarHeader = styled(Box)<{ collapse: boolean }>`
   flex-basis: 100%;
@@ -179,7 +181,6 @@ const NavbarLink = styled(A)`
   height: 80px;
   padding-left: 0.85em;
   padding-right: 0.85em;
-  color: #4c4d4d;
   transition: all 0.2s ease;
   position: relative;
   text-transform: uppercase;
@@ -187,10 +188,15 @@ const NavbarLink = styled(A)`
   align-items: center;
   :focus,
   :hover {
-    color: #2dbe60;
+    ${styledSystemCss({ color: "black" })}
     transition: all 0.2s ease;
   }
 `
+
+NavbarLink.defaultProps = {
+  color: "white",
+}
+
 const Ul = FlexRow.withComponent("ul")
 
 const NavbarNav = styled(Ul)<{ responsive?: boolean }>`
@@ -248,35 +254,23 @@ export const useNavbar = () => {
 export const Header = () => {
   const { collapsed, toggleCollapse } = useNavbar()
   return (
-    <HeaderWrapper>
+    <HeaderWrapper backgroundColor="primary" borderColor="primary">
       <Container>
         <HeaderRow>
           <HeaderColumn>
             <NavbarToggler collapsed={collapsed} onClick={toggleCollapse}>
-              <NavbarToggleItem />
-              <NavbarToggleItem />
-              <NavbarToggleItem />
+              <NavbarToggleItem background="white" />
+              <NavbarToggleItem background="white" />
+              <NavbarToggleItem background="white" />
             </NavbarToggler>
             <Navbar>
               <NavbarHeader collapse={collapsed}>
                 <NavbarNav responsive={true}>
                   <NavbarItem>
-                    <NavbarLink>Envoyer</NavbarLink>
+                    <NavbarLink>Envoyer un kikoo</NavbarLink>
                   </NavbarItem>
                   <NavbarItem>
-                    <NavbarLink>Reçevoir</NavbarLink>
-                  </NavbarItem>
-                  <NavbarItem>
-                    <NavbarLink>À propos </NavbarLink>
-                  </NavbarItem>
-                  <NavbarItem>
-                    <NavbarLink> Frais </NavbarLink>
-                  </NavbarItem>
-                  <NavbarItem>
-                    <NavbarLink> Aide </NavbarLink>
-                  </NavbarItem>
-                  <NavbarItem>
-                    <NavbarLink> Fonctions </NavbarLink>
+                    <NavbarLink>Pourquoi Kikoo ?</NavbarLink>
                   </NavbarItem>
                 </NavbarNav>
               </NavbarHeader>
@@ -285,11 +279,11 @@ export const Header = () => {
           <HeaderColumn alignItems="flex-end" justifyContent="flex-end">
             <Navbar responsive={false}>
               <NavbarNav>
-                <NavbarItem marginLeft={1} marginRight={2}>
-                  <NavbarLink>Se connecter</NavbarLink>
-                </NavbarItem>
-                <NavbarItem>
+                <NavbarItem padding={2} marginLeft={1} marginRight={2}>
                   <PrimaryButton>S'inscrire</PrimaryButton>
+                </NavbarItem>
+                <NavbarItem padding={2}>
+                  <PrimaryButton>Connexion</PrimaryButton>
                 </NavbarItem>
               </NavbarNav>
             </Navbar>

@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import {
   color,
+  flex,
+  FlexProps,
   fontFamily,
   FontFamilyProps,
   fontSize,
@@ -28,7 +30,8 @@ export type TextProps = FontSizeProps &
   TextAlignProps &
   TextStyleProps &
   FontFamilyProps &
-  TextColorProps
+  TextColorProps &
+  FlexProps
 
 export const Text = styled.div<TextProps>`
   ${space}
@@ -40,6 +43,7 @@ export const Text = styled.div<TextProps>`
   ${textAlign}
   ${textStyle}
   ${fontFamily}
+  ${flex}
 `
 
 export const Link = styled(Text.withComponent("a"))`

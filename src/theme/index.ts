@@ -5,10 +5,13 @@ const black = "#000" as const
 
 export const colors = {
   black,
-  h1: "#007acc" as const,
+  h1: "#FB9500" as const,
   h2: black,
   a: black,
-  primary: "#2dbe60" as const,
+  primary: "#FF9800" as const,
+  blue: "#2196F3" as const,
+  primaries: ["#FB8C00"],
+  red: "#F44336",
 } as const
 
 export interface BreakPoint {

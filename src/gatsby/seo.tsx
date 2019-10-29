@@ -5,11 +5,11 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import { graphql, useStaticQuery } from "gatsby";
-import PropTypes from "prop-types";
-import React from "react";
-import { Helmet } from "react-helmet";
-import { SeoQueryQuery } from "../graphqlTypes";
+import { graphql, useStaticQuery } from "gatsby"
+import PropTypes from "prop-types"
+import React from "react"
+import { Helmet } from "react-helmet"
+import { SeoQueryQuery } from "../graphqlTypes"
 
 function SEO({
   description,
@@ -20,7 +20,7 @@ function SEO({
   description: string
   lang: string
   meta: Array<{ name: string; content: string }>
-  title: string,
+  title: string
 }) {
   const { site } = useStaticQuery<SeoQueryQuery>(
     graphql`
@@ -33,10 +33,10 @@ function SEO({
           }
         }
       }
-    `,
-  );
+    `
+  )
 
-  const metaDescription = description || site.siteMetadata.description;
+  const metaDescription = description || site!.siteMetadata!.description
 
   return (
     <Helmet
@@ -44,11 +44,11 @@ function SEO({
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | ${site!.siteMetadata!.title}`}
       meta={[
         {
           name: `description`,
-          content: metaDescription,
+          content: metaDescription!,
         },
         {
           property: `og:title`,
@@ -56,7 +56,7 @@ function SEO({
         },
         {
           property: `og:description`,
-          content: metaDescription,
+          content: metaDescription!,
         },
         {
           property: `og:type`,
@@ -68,7 +68,7 @@ function SEO({
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: site!.siteMetadata!.author!,
         },
         {
           name: `twitter:title`,
@@ -76,24 +76,24 @@ function SEO({
         },
         {
           name: `twitter:description`,
-          content: metaDescription,
+          content: metaDescription!,
         },
       ].concat(meta)}
     />
-  );
+  )
 }
 
 SEO.defaultProps = {
-  lang: `en`,
+  lang: `fr`,
   meta: [],
   description: ``,
-};
+}
 
 SEO.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
-};
+}
 
-export default SEO;
+export default SEO

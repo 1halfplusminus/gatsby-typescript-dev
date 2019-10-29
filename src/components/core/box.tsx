@@ -1,6 +1,8 @@
 import { ViewProps } from "react-native"
 import styled from "styled-components"
 import {
+  border,
+  BorderProps,
   color,
   ColorProps,
   flexbox,
@@ -27,7 +29,8 @@ export type BoxProps = SpaceProps &
   OverflowProps &
   FlexboxProps &
   PositionProps &
-  HeightProps
+  HeightProps &
+  BorderProps;
 
 export const Box = styled.div<BoxProps>`
   ${space}
@@ -38,6 +41,7 @@ export const Box = styled.div<BoxProps>`
   ${flexbox}
   ${position}
   ${height}
+  ${border}
   flex-shrink: 1;
   display: flex;
 `
