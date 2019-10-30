@@ -11,7 +11,7 @@ import {
   CreateWebpackConfigArgs,
 } from "gatsby"
 import { createFilePath } from "gatsby-source-filesystem"
-import "./src/index.d.ts"
+import "./src/@types/index.d.ts"
 
 export const onCreateNode = ({ node, getNode, actions }: CreateNodeArgs) => {
   const { createNodeField } = actions

@@ -76,6 +76,7 @@
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "react-docgen-typescript-loader": "^3.3.0",
+    "rimraf": "^3.0.0",
     "surge": "^0.21.3",
     "ts-jest": "^24.1.0",
     "tslint": "^5.20.0",
@@ -87,7 +88,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "npx --node-arg '-r ./babel-register.js' gatsby build",
+    "build": "rimraf ./public ./cache -rf  && npx --node-arg '-r ./babel-register.js' gatsby build",
     "develop": "npx --node-arg '-r ./babel-register.js' gatsby develop --host=0.0.0.0",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",

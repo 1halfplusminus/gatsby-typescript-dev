@@ -6,7 +6,14 @@ import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input"
 import fr from "react-phone-number-input/locale/fr"
 import "react-phone-number-input/style.css"
 import styled from "styled-components"
-import { color, ColorProps, FlexProps, SpaceProps, textAlign, TextAlignProps } from "styled-system"
+import {
+  color,
+  ColorProps,
+  FlexProps,
+  SpaceProps,
+  textAlign,
+  TextAlignProps,
+} from "styled-system"
 import Swal from "sweetalert2"
 import * as Yup from "yup"
 import { Box, FlexColumn } from "../components/core/box"
@@ -47,13 +54,13 @@ const StyledPhoneInput = styled(PhoneInput)<ColorProps & SpaceProps>`
   ${color}
   .react-phone-number-input__row {
     ${css({
-      padding: 2,
+      padding: [2, 3],
     })}
   }
   .react-phone-number-input__input {
     ${css({
       backgroundColor: "white",
-      fontSize: 3,
+      fontSize: [2, 3],
     })}
   }
 `
@@ -61,7 +68,7 @@ const StyledPhoneInput = styled(PhoneInput)<ColorProps & SpaceProps>`
 const Input = styled.input<FlexProps & SpaceProps & ColorProps>`
   ${css({
     padding: 2,
-    fontSize: 3,
+    fontSize: [2, 3],
   })}
   border: 1px solid #E1E1E1;
   border-radius: 4px;
@@ -121,7 +128,7 @@ export const MessageForm = () => {
   )
   return (
     <Form onSubmit={handleSubmit}>
-      <FlexColumn padding={3}>
+      <FlexColumn padding={[0, 3]}>
         <Label>
           <span>Etape: 1</span> Le message
         </Label>

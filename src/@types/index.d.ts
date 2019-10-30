@@ -1,6 +1,6 @@
 import "styled-components"
 import "styled-system"
-import { colors, Theme } from "./theme"
+import { colors, Theme } from "../theme"
 
 type ThemeColors = keyof typeof colors
 
