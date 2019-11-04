@@ -1,5 +1,5 @@
-import React from "react";
-import { Title1 } from "../theme/title";
+import React from "react"
+import { Title1 } from "./core/title"
 
 export type HelloProps = Partial<typeof defaultProps> & {
   /**
@@ -8,15 +8,15 @@ export type HelloProps = Partial<typeof defaultProps> & {
    * @default " "
    *
    */
-  name?: string,
-};
+  name?: string
+}
 
 const defaultProps = {
   name: "World",
-};
+}
 
-export const Hello = ({ name }: HelloProps) => <Title1> Hello {name}</Title1>;
+export const Hello = ({ name }: HelloProps) => <Title1> Hello {name}</Title1>
 
-Hello.defaultProps = defaultProps;
+Hello.defaultProps = defaultProps
 
-export default Hello;
+export default Hello
