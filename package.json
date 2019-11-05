@@ -6,12 +6,7 @@
   "author": "Dart Uchiwa <dartuchiwa@gmail.com>",
   "dependencies": {
     "@hot-loader/react-dom": "^16.10.2",
-    "@styled-system/css": "^5.0.23",
-    "@types/react-datepicker": "^2.9.3",
-    "@types/styled-system__css": "^5.0.4",
     "babel-plugin-styled-components": "^1.10.6",
-    "css-loader": "^3.2.0",
-    "formik": "^2.0.3",
     "gatsby": "^2.17.4",
     "gatsby-image": "^2.2.29",
     "gatsby-plugin-manifest": "^2.2.23",
@@ -69,7 +64,6 @@
     "graphql": "^14.5.8",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
-    "react-datepicker": "^2.9.6",
     "react-docgen-typescript-loader": "^3.3.0",
     "ts-jest": "^24.1.0",
     "tslint": "^5.20.0",
@@ -83,7 +77,6 @@
   "scripts": {
     "build": "npx --node-arg '-r ./babel-register.js' gatsby build",
     "develop": "npx --node-arg '-r ./babel-register.js' gatsby develop --host=0.0.0.0",
-    "debug": "npx --node-arg '--inspect-brk -r ./babel-register.js' gatsby develop --host=0.0.0.0",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "npx --node-arg '-r ./babel-register.js' gatsby serve",

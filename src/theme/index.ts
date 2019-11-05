@@ -1,21 +1,15 @@
 import { GenericFamily } from "csstype"
 import { ResponsiveValue } from "styled-system"
 
-const black = "#212121" as const
-const white = "#FAFAFA"
+const black = "#000" as const
 
 export const colors = {
   black,
-  h1: "#696969" as const,
-  h2: "#696969",
-  a: "black",
-  primary: "#753373" as const,
-  primaryHover: "#2f2f2f" as const,
-  primaryText: "white" as const,
-  white,
+  h1: "#007acc" as const,
+  h2: black,
+  a: black,
+  main: "red" as const,
 } as const
-
-export type ColorPalette = keyof typeof colors
 
 const theme = {
   breakpoints: ["576px", "768px", "992px", "1200px", "1800px"],

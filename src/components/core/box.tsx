@@ -31,25 +31,13 @@ export const Box = styled.div<BoxProps>`
   ${color}
   ${overflow}
   ${flexbox}
-  display: flex;
-`
-export const BoxRow = styled.div<BoxProps>`
-  ${space}
-  ${width}
-  ${fontSize}
-  ${color}
-  ${overflow}
-  ${flexbox}
-  display: flex;
-  flex-direction: row;
+  flex-shrink: 1;
 `
 
 export const FlexRow = styled<ComponentType<BoxProps>>(Box)`
   flex-direction: row;
-  display: flex;
 `
 
 export const FlexColumn = styled<ComponentType<BoxProps>>(Box)`
   flex-direction: column;
-  display: flex;
 `
