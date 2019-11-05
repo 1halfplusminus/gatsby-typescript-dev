@@ -40,6 +40,7 @@ export const Text = styled.div<TextProps>`
   ${textAlign}
   ${textStyle}
   ${fontFamily}
+  display: flex;
 `
 
 export const Link = styled(Text.withComponent("a"))`
