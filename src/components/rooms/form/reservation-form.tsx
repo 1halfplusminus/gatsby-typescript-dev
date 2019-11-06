@@ -1,5 +1,6 @@
 import { ErrorMessage, InjectedFormikProps } from "formik"
 import React from "react"
+import styled from "styled-components"
 import { Box } from "../../core/box"
 import { PrimaryButton } from "../../core/primary-button"
 import { StyledDatePicker } from "../../form/date-picker"
@@ -17,85 +18,82 @@ export interface ReservationFormValues {
   country?: string
   note?: string
 }
-
+const FormCol = styled(Box)`
+  display: flex;
+  justify-content: center;
+`
+FormCol.defaultProps = {
+  flexBasis: "50%",
+  padding: 2,
+}
 export const ReservationForm = ({
   isSubmitting,
   values: { startDate, endDate },
   setFieldValue,
 }: InjectedFormikProps<ReservationFormProps, ReservationFormValues>) => {
   return (
-    <Form
-      flex={1}
-      backgroundColor="grey"
-      justifyContent="center"
-      alignContent="center"
-      alignItems="center"
-      padding={3}
-    >
-      <FormRow>
-        <Box justifyContent="center" flexBasis="50%">
-          <StyledDatePicker
-            selected={startDate}
-            onChange={value => setFieldValue("startDate", value)}
-            placeholderText="Arrivée le"
-            marginRight={2}
-          />
-        </Box>
-        <Box justifyContent="center" flexBasis="50%">
-          <StyledDatePicker
-            selected={endDate}
-            onChange={value => setFieldValue("endDate", value)}
-            placeholderText="Départ le"
-          />
-        </Box>
-      </FormRow>
-      <FormRow>
-        <Box justifyContent="center" flexBasis="50%" marginRight={2}>
-          <Input type="text" name="firstName" placeholder="Prénom" />
-          <ErrorMessage name="firstName" component="div" />
-        </Box>
-        <Box justifyContent="center" flexBasis="50%">
-          <Input type="text" name="lastName" placeholder="Nom" />
-          <ErrorMessage name="lastName" component="div" />
-        </Box>
-      </FormRow>
-      <FormRow>
-        <Box justifyContent="center" flexBasis="50%" marginRight={2}>
-          <Input type="text" name="address" placeholder="Adresse" />
-          <ErrorMessage name="address" component="div" />
-        </Box>
-        <Box justifyContent="center" flexBasis="50%">
-          <Input type="text" name="country" placeholder="Pays" />
-          <ErrorMessage name="country" component="div" />
-        </Box>
-      </FormRow>
-      <FormRow>
-        <Box justifyContent="center" flexBasis="50%" marginRight={2}>
-          <Input type="email" name="email" placeholder="Adresse email" />
-          <ErrorMessage name="address" component="div" />
-        </Box>
-        <Box justifyContent="center" flexBasis="50%">
-          <Input type="text" name="phone" placeholder="Numéro de téléphone" />
-          <ErrorMessage name="country" component="div" />
-        </Box>
-      </FormRow>
-      <FormRow flex={1} width="100%">
-        <TextArea
-          name="note"
-          component="textarea"
-          rows={5}
-          flex={1}
-          placeholder="Entrer vos notes ici"
-        />
-      </FormRow>
-      <PrimaryButton
-        flex={1}
-        type="submit"
-        disabled={isSubmitting}
-        gridColumn={3}
-      >
-        Envoyer
-      </PrimaryButton>
+    <Form flex={1} flexGrow={1} backgroundColor="#f5f5f5">
+      <Box display="flex" flexDirection="column" flex={1}>
+        <FormRow>
+          <FormCol>
+            <Box flex={1}>
+              <StyledDatePicker
+                variant="inline"
+                value={startDate}
+                onChange={value => setFieldValue("startDate", value)}
+                label="Arrivée le"
+              />
+            </Box>
+          </FormCol>
+          <FormCol>
+            <Box flex={1}>
+              <StyledDatePicker
+                variant="inline"
+                value={endDate}
+                onChange={value => setFieldValue("endDate", value)}
+                label="Départ le"
+              />
+            </Box>
+          </FormCol>
+        </FormRow>
+        <FormRow>
+          <FormCol>
+            <Input type="text" name="firstName" label="Prénom" />
+            <ErrorMessage name="firstName" component="div" />
+          </FormCol>
+          <FormCol>
+            <Input type="text" name="lastName" label="Nom" />
+            <ErrorMessage name="lastName" component="div" />
+          </FormCol>
+        </FormRow>
+        <FormRow>
+          <FormCol>
+            <Input type="text" name="address" label="Adresse" />
+            <ErrorMessage name="address" component="div" />
+          </FormCol>
+          <FormCol>
+            <Input
+              placeholder="+687 73 68 28"
+              type="text"
+              name="phone"
+              label="Numéro de téléphone"
+            />
+            <ErrorMessage name="country" component="div" />
+          </FormCol>
+        </FormRow>
+        <FormRow>
+          <FormCol flexBasis="100%" paddingBottom={1}>
+            <TextArea name="note" rows={5} flex={1} placeholder="Entrer vos notes ici" />
+          </FormCol>
+        </FormRow>
+        <FormRow>
+          <FormCol flexBasis="100%" padding={0}>
+            <PrimaryButton type="submit" disabled={isSubmitting}>
+              Envoyer
+            </PrimaryButton>
+          </FormCol>
+        </FormRow>
+      </Box>
     </Form>
   )
 }

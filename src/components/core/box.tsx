@@ -1,13 +1,15 @@
-import { ComponentType } from "react"
+import { DisplayProps, height } from "@material-ui/system"
 import { ViewProps } from "react-native"
 import styled from "styled-components"
 import {
   color,
   ColorProps,
+  display,
   flexbox,
   FlexboxProps,
   fontSize,
   FontSizeProps,
+  HeightProps,
   overflow,
   OverflowProps,
   space,
@@ -22,16 +24,20 @@ export type BoxProps = SpaceProps &
   ColorProps &
   ViewProps &
   OverflowProps &
-  FlexboxProps
+  FlexboxProps &
+  HeightProps &
+  DisplayProps
 
-export const Box = styled.div<BoxProps>`
+export const Box = styled.div<BoxProps & { container?: boolean }>`
   ${space}
   ${width}
   ${fontSize}
   ${color}
   ${overflow}
   ${flexbox}
-  display: flex;
+  ${height}
+  ${display}
+  display: ${({ container }) => (container ? "flex" : "")};
 `
 export const BoxRow = styled.div<BoxProps>`
   ${space}
@@ -44,12 +50,12 @@ export const BoxRow = styled.div<BoxProps>`
   flex-direction: row;
 `
 
-export const FlexRow = styled<ComponentType<BoxProps>>(Box)`
+export const FlexRow = styled(Box)`
   flex-direction: row;
   display: flex;
 `
 
-export const FlexColumn = styled<ComponentType<BoxProps>>(Box)`
+export const FlexColumn = styled(Box)`
   flex-direction: column;
   display: flex;
 `

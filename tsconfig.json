@@ -56,13 +56,6 @@
     // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
   },
-  "files": [
-    "gatsby-browser.tsx",
-    "gatsby-node.ts",
-    "gatsby-ssr.tsx"
-  ], 
-  "exclude": ["node_modules", "**/*.ts", "**/**.ts", "src/**.ts"],
-  "include": [
-      "src/styled.d.ts",
-  ]
+  "exclude": ["node_modules"],
+
 }

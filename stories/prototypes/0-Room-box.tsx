@@ -12,6 +12,7 @@ import {
   RoomListingCol,
   RoomListingWrapper,
 } from "../../src/components/rooms/listing"
+import { Context } from "../../src/containers/context"
 import theme from "../../src/theme"
 
 const stories = storiesOf("Room listing", module)
@@ -27,9 +28,9 @@ stories.add("Listing box", () => (
 ))
 
 stories.add("Form reservation frontend", () => (
-  <ThemeProvider theme={theme}>
+  <Context>
     <FlexRow justifyContent="center">
-      <Box justifyContent="center" flexBasis="40%">
+      <Box container={true} justifyContent="center" flexBasis="40%">
         <Formik<ReservationFormValues>
           initialValues={{}}
           onSubmit={() => {
@@ -39,5 +40,5 @@ stories.add("Form reservation frontend", () => (
         />
       </Box>
     </FlexRow>
-  </ThemeProvider>
+  </Context>
 ))
