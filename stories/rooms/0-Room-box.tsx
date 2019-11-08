@@ -7,16 +7,17 @@ import {
   ReservationForm,
   ReservationFormValues,
 } from "../../src/components/rooms/form/reservation-form"
-import {
-  RoomListing,
-  RoomListingCol,
-  RoomListingWrapper,
-} from "../../src/components/rooms/listing"
+import { RoomListing, RoomListingCol, RoomListingWrapper } from "../../src/components/rooms/listing"
 import { Context } from "../../src/containers/context"
 import theme from "../../src/theme"
 
 const stories = storiesOf("Room listing", module)
 
+stories.addDecorator(story => (
+  <Context>
+    <FlexRow justifyContent="center">{story()}</FlexRow>
+  </Context>
+))
 stories.add("Listing box", () => (
   <ThemeProvider theme={theme}>
     <RoomListingWrapper>
@@ -27,18 +28,18 @@ stories.add("Listing box", () => (
   </ThemeProvider>
 ))
 
-stories.add("Form reservation frontend", () => (
-  <Context>
-    <FlexRow justifyContent="center">
-      <Box container={true} justifyContent="center" flexBasis="40%">
-        <Formik<ReservationFormValues>
-          initialValues={{}}
-          onSubmit={() => {
-            return
-          }}
-          render={props => <ReservationForm {...props} />}
-        />
-      </Box>
-    </FlexRow>
-  </Context>
-))
+stories
+  .addDecorator(story => (
+    <Box container={true} justifyContent="center" flexBasis="40%">
+      {story()}
+    </Box>
+  ))
+  .add("Form reservation frontend", () => (
+    <Formik<ReservationFormValues>
+      initialValues={{}}
+      onSubmit={() => {
+        return
+      }}
+      render={props => <ReservationForm {...props} />}
+    />
+  ))
