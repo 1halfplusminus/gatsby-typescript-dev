@@ -22,11 +22,11 @@ services:
       - 6006:6006
     volumes:
       # Update this to wherever you want VS Code to mount the folder of your project
-      - ./:/workspace:cached
-      - node_modules:/workspace/node_modules
-      - /workspace/.cache
-      - /workspace/public
-      - /workspace/storybook-static
+      - node_modules:/home/app/node_modules
+      - app:/home/app
+      - /home/app/.cache
+      - /home/app/public
+      - /home/app/storybook-static
       - ~/.ssh:/tmp/.ssh-localhost:ro
       # Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker-compose for details.
       # - /var/run/docker.sock:/var/run/docker.sock
@@ -41,3 +41,4 @@ services:
     command: sleep infinity
 volumes:
   node_modules:
+  app:
