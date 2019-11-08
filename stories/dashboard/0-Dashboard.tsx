@@ -11,6 +11,7 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import ChevronRightIcon from "@material-ui/icons/ChevronRight"
 import DashboardIcon from "@material-ui/icons/Dashboard"
+import DateRangeIcon from "@material-ui/icons/DateRange"
 import MenuIcon from "@material-ui/icons/Menu"
 import { storiesOf } from "@storybook/react"
 import React from "react"
@@ -81,13 +82,24 @@ const DashboardMenu = () => {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={handleClose}>Cake</MenuItem>
-        <MenuItem onClick={handleClose}>Death</MenuItem>
+        <MenuItem onClick={handleClose}>Prochaines réservations</MenuItem>
+        <MenuItem onClick={handleClose}>Réservations en attente</MenuItem>
       </Menu>
     </>
   )
 }
-
+const AvailabilityMenu = () => {
+  return (
+    <>
+      <ListItem button={true} key={"availaility"}>
+        <ListItemIcon>
+          <DateRangeIcon />
+        </ListItemIcon>
+        <ListItemText primary={"Disponibilité"} />
+      </ListItem>
+    </>
+  )
+}
 stories.addDecorator(story => (
   <Context>
     <FlexRow height="100vh" flex={1} backgroundColor="red">
@@ -103,7 +115,7 @@ stories.add("Dasboard layout", () => (
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <AppbarTitle variant="h6">Eden.nc </AppbarTitle>
+          <AppbarTitle variant="h6">Eden</AppbarTitle>
         </Toolbar>
       </AppBar>
     </HeaderWrapper>
@@ -113,6 +125,7 @@ stories.add("Dasboard layout", () => (
           <SidebarContent>
             <List>
               <DashboardMenu />
+              <AvailabilityMenu />
             </List>
             <Divider />
           </SidebarContent>
