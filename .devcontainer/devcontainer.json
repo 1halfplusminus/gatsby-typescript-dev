@@ -38,7 +38,6 @@
     "prisma.vscode-graphql"
   ],
   "appPort": [
-    8000,
     6006
   ],
   // Copy the contents to the correct location and set permissions
