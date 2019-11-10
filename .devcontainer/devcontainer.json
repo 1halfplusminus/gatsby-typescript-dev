@@ -3,10 +3,7 @@
   "name": "Existing Docker Compose (Extend)",
   // Update the 'dockerComposeFile' list if you have more compose files or use different names.
   // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
-  "dockerComposeFile": [
-    "../docker-compose.yml",
-    "docker-compose.yml"
-  ],
+  "dockerComposeFile": ["../docker-compose.yml", "docker-compose.yml"],
   // The 'service' property is the name of the service for the container that VS Code should
   // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
   "service": "frontend",
@@ -35,12 +32,11 @@
     "jpoissonnier.vscode-styled-components",
     "eamodio.gitlens",
     "donjayamanne.githistory",
-    "prisma.vscode-graphql"
+    "prisma.vscode-graphql",
+    "steoates.autoimport",
+    "christian-kohler.path-intellisense"
   ],
-  "appPort": [
-    8000,
-    6006
-  ],
+  "appPort": [6006],
   // Copy the contents to the correct location and set permissions
   "postCreateCommand": "mkdir -p ~/.ssh && cp -r /tmp/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*"
 }
