@@ -3,8 +3,6 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import React, { PropsWithChildren } from "react"
 import styled from "styled-components"
 
-const drawerWidth = 240
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     toolbar: theme.mixins.toolbar,

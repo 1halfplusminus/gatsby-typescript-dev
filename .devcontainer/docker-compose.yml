@@ -22,8 +22,8 @@ services:
       - 6006:6006
     volumes:
       # Update this to wherever you want VS Code to mount the folder of your project
-      - node_modules:/home/app/node_modules
-      - app:/home/app
+      - node_modules:/home/app/node_modules:cached
+      - ./:/home/app:cached
       - /home/app/.cache
       - /home/app/public
       - /home/app/storybook-static

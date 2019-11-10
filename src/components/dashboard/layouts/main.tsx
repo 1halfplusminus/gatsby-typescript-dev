@@ -27,6 +27,11 @@ export const BodyWrapper = styled(Box)`
   flex: 1;
   display: flex;
   justify-content: center;
+`
+export const BodyContentWrapper = styled(Box)`
+  flex: 1;
+  display: flex;
+  justify-content: center;
   ${css({
     padding: [2, 4, 6],
   })}
