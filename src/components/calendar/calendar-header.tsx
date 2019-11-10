@@ -48,7 +48,10 @@ const CalenderDayOfWeekWrapper = styled(Box)`
 
 export type SlideDirection = "left" | "right"
 
-const useCalendarHeaderState = ({ date }: { date: Date }) => {
+const useCalendarHeaderState = ({
+  date,
+  onMonthChange: onMonthChangeCallback,
+}: Pick<CalendarHeaderProps, "date" | "onMonthChange">) => {
   const utils = useUtils()
 
   const [selectedMonth, setSelectedMonth] = useState(date)
@@ -67,6 +70,7 @@ const useCalendarHeaderState = ({ date }: { date: Date }) => {
       direction === "left" ? utils.getPreviousMonth(currentDate) : utils.getNextMonth(currentDate)
     if (nextMonth) {
       setSelectedMonth(nextMonth)
+      onMonthChangeCallback(nextMonth)
     }
   }
   const weekDays = () => {
@@ -83,16 +87,23 @@ const useCalendarHeaderState = ({ date }: { date: Date }) => {
   }
 }
 
-export const CalendarHeader = ({ date }: { date: Date }) => {
-  const { monthText, onMonthChange, selectedMonth, weekDays } = useCalendarHeaderState({ date })
+export interface CalendarHeaderProps {
+  date: Date
+  onMonthChange: ({ date }: { date: Date }) => void
+}
+
+export const CalendarHeader = ({ date, onMonthChange }: CalendarHeaderProps) => {
+  const { monthText, onMonthChange: monthChange, selectedMonth, weekDays } = useCalendarHeaderState(
+    { date, onMonthChange }
+  )
   return (
     <CalendarHeaderWrapper>
       <CalenderMonthsWrapper>
-        <IconButton onClick={onMonthChange({ date: selectedMonth, direction: "left" })}>
+        <IconButton onClick={monthChange({ date: selectedMonth, direction: "left" })}>
           <LeftIcon />
         </IconButton>
         <CalendarHeaderTitle>{monthText}</CalendarHeaderTitle>
-        <IconButton onClick={onMonthChange({ date: selectedMonth, direction: "right" })}>
+        <IconButton onClick={monthChange({ date: selectedMonth, direction: "right" })}>
           <RightIcon />
         </IconButton>
       </CalenderMonthsWrapper>
@@ -108,4 +119,5 @@ export const CalendarHeader = ({ date }: { date: Date }) => {
 
 CalendarHeader.defaultProps = {
   date: new Date(),
+  onMonthChange: () => {},
 }
