@@ -1,8 +1,11 @@
 import Divider from "@material-ui/core/Divider"
 import List from "@material-ui/core/List"
 import { storiesOf } from "@storybook/react"
+import startOfDay from "date-fns/startOfDay"
 import React from "react"
+import { useCalendar, useDatedItem } from "../../src/components/calendar"
 import { CalendarHeader } from "../../src/components/calendar/calendar-header"
+import { CalendarWeeks } from "../../src/components/calendar/calendar-week"
 import { Box, FlexRow } from "../../src/components/core/box"
 import { AppBar } from "../../src/components/dashboard/appbar"
 import {
@@ -52,11 +55,31 @@ stories.add("Dasboard layout", () => (
     </MainWrapper>
   </SidebarMainLayout>
 ))
-stories.add("Dasboard disponibilité", () => (
-  <Box flex={1}>
-    <DatePickerButton />
-    <Context>
-      <CalendarHeader />
-    </Context>
-  </Box>
-))
+stories.add("Dasboard disponibilité", () => {
+  const items = [{ date: new Date(), data: "test" }]
+  const { month, onMonthChange, onDayChange, day } = useCalendar()
+  const renderDatedItem = useDatedItem({
+    items,
+    dateExtractor: i => startOfDay(i.date),
+    renderItem: i => (
+      <Box
+        alignItems="center"
+        display="flex"
+        justifyContent="center"
+        backgroundColor="red"
+        flex={1}
+      >
+        {i.data}
+      </Box>
+    ),
+  })
+  return (
+    <Box flex={1}>
+      <DatePickerButton value={day} onChange={onDayChange} />
+      <Context>
+        <CalendarHeader date={month} onMonthChange={onMonthChange} />
+        <CalendarWeeks date={month} renderDay={renderDatedItem} />
+      </Context>
+    </Box>
+  )
+})

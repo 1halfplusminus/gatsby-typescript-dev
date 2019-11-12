@@ -114,8 +114,17 @@ const DatePickerButtonWrapper = styled.div`
   display: inline-flex;
 `
 
-export const DatePickerButton = () => {
+export interface DayPickerButton {
+  onChange: ({ date }: { date: Date }) => void
+  value: Date
+}
+export const DatePickerButton = ({ onChange, value }: DayPickerButton) => {
   const { anchorEl, handleClick, id, open, handleClickAway } = usePopper()
+  const onDateChange = (date: Date | null) => {
+    if (date) {
+      onChange({ date })
+    }
+  }
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <DatePickerButtonWrapper>
@@ -123,7 +132,7 @@ export const DatePickerButton = () => {
           <DateRange />
         </IconButton>
         <Popper disablePortal={true} id={id} open={open} anchorEl={anchorEl}>
-          <StyledDatePicker value={null} onChange={() => {}} variant="static" />
+          <StyledDatePicker value={value} onChange={onDateChange} variant="static" />
         </Popper>
       </DatePickerButtonWrapper>
     </ClickAwayListener>

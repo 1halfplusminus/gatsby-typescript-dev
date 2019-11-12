@@ -7,7 +7,7 @@ import css from "@styled-system/css"
 import eachDayOfInterval from "date-fns/eachDayOfInterval"
 import endOfWeek from "date-fns/endOfWeek"
 import startOfWeek from "date-fns/startOfWeek"
-import React, { useMemo, useState } from "react"
+import React, { useMemo, useState, useEffect } from "react"
 import styled from "styled-components"
 import { Box } from "../core/box"
 
@@ -35,7 +35,7 @@ export const CalendarWeekDay = styled(Box)`
   align-items: center;
   text-transform: capitalize;
   ${css({
-    flexBasis: "14.2%",
+    flexBasis: "12.5%",
   })}
 `
 
@@ -70,7 +70,7 @@ const useCalendarHeaderState = ({
       direction === "left" ? utils.getPreviousMonth(currentDate) : utils.getNextMonth(currentDate)
     if (nextMonth) {
       setSelectedMonth(nextMonth)
-      onMonthChangeCallback(nextMonth)
+      onMonthChangeCallback({ date: nextMonth })
     }
   }
   const weekDays = () => {
@@ -79,6 +79,9 @@ const useCalendarHeaderState = ({
       end: endOfWeek(selectedMonth, { locale: utils.locale }),
     }).map(day => utils.format(day, "EEEE"))
   }
+  useEffect(() => {
+    setSelectedMonth(date)
+  }, [date])
   return {
     monthText,
     selectedMonth,
@@ -119,5 +122,7 @@ export const CalendarHeader = ({ date, onMonthChange }: CalendarHeaderProps) => 
 
 CalendarHeader.defaultProps = {
   date: new Date(),
-  onMonthChange: () => {},
+  onMonthChange: () => {
+    return
+  },
 }
