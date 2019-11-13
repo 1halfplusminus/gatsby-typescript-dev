@@ -8,6 +8,7 @@ import { CalendarHeader } from "../../src/components/calendar/calendar-header"
 import { CalendarWeeks } from "../../src/components/calendar/calendar-week"
 import { Box, FlexRow } from "../../src/components/core/box"
 import { AppBar } from "../../src/components/dashboard/appbar"
+import { DisponibilityCalendarDayBox } from "../../src/components/dashboard/disponibility/calendar-week-box"
 import {
   BodyContentWrapper,
   BodyWrapper,
@@ -56,21 +57,19 @@ stories.add("Dasboard layout", () => (
   </SidebarMainLayout>
 ))
 stories.add("Dasboard disponibilité", () => {
-  const items = [{ date: new Date(), data: "test" }]
+  const items = [
+    { date: new Date(), available: true, holiday: false, reservation: 5, editable: true },
+  ]
   const { month, onMonthChange, onDayChange, day } = useCalendar()
   const renderDatedItem = useDatedItem({
     items,
     dateExtractor: i => startOfDay(i.date),
     renderItem: i => (
-      <Box
-        alignItems="center"
-        display="flex"
-        justifyContent="center"
-        backgroundColor="red"
-        flex={1}
-      >
-        {i.data}
-      </Box>
+      <DisponibilityCalendarDayBox
+        {...i}
+        onDisponibilityChange={disponibility => {
+        }}
+      />
     ),
   })
   return (

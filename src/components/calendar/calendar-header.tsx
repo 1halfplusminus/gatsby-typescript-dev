@@ -7,7 +7,7 @@ import css from "@styled-system/css"
 import eachDayOfInterval from "date-fns/eachDayOfInterval"
 import endOfWeek from "date-fns/endOfWeek"
 import startOfWeek from "date-fns/startOfWeek"
-import React, { useMemo, useState, useEffect } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import styled from "styled-components"
 import { Box } from "../core/box"
 
@@ -36,6 +36,8 @@ export const CalendarWeekDay = styled(Box)`
   text-transform: capitalize;
   ${css({
     flexBasis: "12.5%",
+    marginBottom: [1],
+    marginLeft: [1],
   })}
 `
 

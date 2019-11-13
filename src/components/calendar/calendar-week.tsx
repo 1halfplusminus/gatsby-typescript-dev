@@ -10,19 +10,21 @@ export interface CalendarWeeksProps {
   date: Date
   renderDay: (day: Date) => ReactNode
 }
-const CalendarWeekBox = styled(Box)`
-  height: 117px;
+export const CalendarWeekBox = styled(Box)`
+  min-height: 117px;
   font-size: 12px;
   background-color: #e7e7e7;
   border: solid 1px #c0c0c0;
   ${css({
     flexBasis: "12.5%",
+    marginBottom: [1],
+    marginLeft: [1],
   })}
   display: flex;
 `
 
 const CalendarWeekBoxEmpty = styled(CalendarWeekBox)`
-  border: solid 1px #c0c0c0;
+  border: solid 1px transparent;
   background-color: transparent;
 `
 const useCalendarWeeks = ({ date }: { date: Date }) => {

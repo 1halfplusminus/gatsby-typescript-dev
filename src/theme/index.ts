@@ -13,6 +13,7 @@ export const colors = {
   primaryHover: "#2f2f2f" as const,
   primaryText: "white" as const,
   white,
+  green: "#4CAF50",
 } as const
 
 export type ColorPalette = keyof typeof colors
