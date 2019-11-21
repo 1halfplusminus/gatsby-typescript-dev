@@ -26,9 +26,11 @@
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
     "react-hot-loader": "^4.12.15",
+    "react-three-fiber": "^3.0.13",
     "styled-components": "^4.4.0",
     "styled-system": "^5.1.2",
-    "typescript": "^3.6.4"
+    "three": "^0.110.0",
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -56,6 +58,7 @@
     "@types/storybook__react": "^4.0.2",
     "@types/styled-components": "^4.1.19",
     "@types/styled-system": "^5.1.2",
+    "@types/three": "^0.103.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
