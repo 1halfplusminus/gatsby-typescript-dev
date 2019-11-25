@@ -1,8 +1,22 @@
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useFrame } from "react-three-fiber"
 import * as THREE from "three"
 import slotMachine from "./slot_texture.png"
 
+export const useWheelTexture = () => {
+  const { current: texture } = useRef<THREE.Texture>(
+    new THREE.TextureLoader().load(slotMachine)
+  )
+  useEffect(() => {
+    if (texture) {
+      texture.wrapS = THREE.RepeatWrapping
+      texture.wrapT = THREE.RepeatWrapping
+    }
+  }, [texture])
+  return {
+    texture,
+  }
+}
 export type WheelValue = 0 | 1 | 2 | 3 | 4 | 5 | 6
 export const Wheel = ({
   index,
@@ -22,11 +36,7 @@ export const Wheel = ({
   value?: WheelValue
   onFinish?: (value: WheelValue) => void
 }) => {
-  const texture = useMemo(() => new THREE.TextureLoader().load(slotMachine), [
-    slotMachine,
-  ])
-  texture.wrapS = THREE.RepeatWrapping
-  texture.wrapT = THREE.RepeatWrapping
+  const { texture } = useWheelTexture()
   const numberOfFace = 6
   const degPerFace = 51.4285714286
   const rotationPerFace = THREE.Math.degToRad(-degPerFace)

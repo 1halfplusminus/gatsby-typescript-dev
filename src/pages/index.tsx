@@ -1,31 +1,17 @@
-import React, { Suspense, useEffect, useRef } from "react"
-import { Canvas, ReactThreeFiber, useRender, useThree } from "react-three-fiber"
+import React, { Suspense } from "react"
+import { Canvas } from "react-three-fiber"
 import styled from "styled-components"
-import * as THREE from "three"
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
-import { useWheels } from "../components/wheel/useWheel"
-import { Wheel } from "../components/wheel/wheel"
-
-const Controls = (props: Partial<OrbitControls>) => {
-  const { gl, camera } = useThree()
-  const ref = useRef(
-    Object.assign(new OrbitControls(camera, gl.domElement), props)
-  )
-  useRender(() => ref.current.update(), false)
-  return <> </>
-}
-const Plane = () => {
-  const ref = useRef<ReactThreeFiber.Object3DNode<THREE.Mesh, any>>()
-  return (
-    <mesh ref={ref} position={[0, -15, 0]} rotation={[-0.5 * Math.PI, 0, 0]}>
-      <planeBufferGeometry attach="geometry" args={[150, 150]} />
-      <meshLambertMaterial attach="material" color={"#b8edff"} />
-    </mesh>
-  )
-}
+import { Controls } from "../components/3d/controls"
+import { SlotMachine } from "../components/3d/slotmachine/slotmachine"
+import { useWheels } from "../components/3d/wheel/useWheel"
+import { Wheel } from "../components/3d/wheel/wheel"
+import { Hud } from "../components/hud/hud"
 
 const CanvasWrapper = styled.div`
   height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 `
 
 const IndexPage = () => {
@@ -35,11 +21,11 @@ const IndexPage = () => {
     2: 0,
   } as const)
   const { bind, goTo } = wheels
-  useEffect(() => {
-    goTo(0)({ numberOfTurn: 1, value: 0 })
-    goTo(1)({ numberOfTurn: 6, value: 5 })
-    goTo(2)({ numberOfTurn: 7, value: 2 })
-  }, [])
+  // useEffect(() => {
+  //   goTo(0)({ numberOfTurn: 1, value: 0 })
+  //   goTo(1)({ numberOfTurn: 6, value: 5 })
+  //   goTo(2)({ numberOfTurn: 7, value: 2 })
+  // }, [])
   return (
     <CanvasWrapper>
       <Canvas camera={{ fov: 45, position: [0, 0, 300], near: 1, far: 1000 }}>
@@ -47,6 +33,7 @@ const IndexPage = () => {
           <Wheel {...bind(0)} />
           <Wheel {...bind(1)} />
           <Wheel {...bind(2)} />
+          <SlotMachine />
         </Suspense>
         <spotLight
           args={["0xffffff"]}
@@ -65,6 +52,7 @@ const IndexPage = () => {
           minPolarAngle={Math.PI / 2}
         />
       </Canvas>
+      <Hud />
     </CanvasWrapper>
   )
 }

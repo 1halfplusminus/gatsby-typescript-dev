@@ -4,6 +4,8 @@ import styled from "styled-components"
 import {
   color,
   ColorProps,
+  display,
+  DisplayProps,
   flexbox,
   FlexboxProps,
   fontSize,
@@ -22,7 +24,10 @@ export type BoxProps = SpaceProps &
   ColorProps &
   ViewProps &
   OverflowProps &
-  FlexboxProps
+  FlexboxProps &
+  DisplayProps & {
+    container?: boolean
+  }
 
 export const Box = styled.div<BoxProps>`
   ${space}
@@ -31,7 +36,9 @@ export const Box = styled.div<BoxProps>`
   ${color}
   ${overflow}
   ${flexbox}
+  ${display}
   flex-shrink: 1;
+  display: ${({ container }) => container && "flex"};
 `
 
 export const FlexRow = styled<ComponentType<BoxProps>>(Box)`
