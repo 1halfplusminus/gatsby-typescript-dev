@@ -1,9 +1,11 @@
 import React from "react"
 import styled, { css } from "styled-components"
+import { useGame } from "../../features/game/hook"
 import { Box } from "../core/box"
 import { Button } from "../core/button"
 
 export const Hud = () => {
+  const { start } = useGame()
   return (
     <>
       <UpperLeft />
@@ -11,7 +13,9 @@ export const Hud = () => {
       <LowerLeft />
 
       <LowerRight justifyContent="center" alignItems="center" container={true}>
-        <Button color="white">Jouer</Button>
+        <Button onClick={start} color="white">
+          Jouer
+        </Button>
       </LowerRight>
     </>
   )

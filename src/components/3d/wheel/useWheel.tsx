@@ -5,7 +5,7 @@ const useWheel = (
   {
     value: defaultValue,
   }: {
-    value?: WheelValue
+    value: WheelValue
   } = { value: 0 }
 ) => {
   const [value, setValue] = useState<WheelValue>(defaultValue)

@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React, { Suspense, useEffect } from "react"
 import { Canvas } from "react-three-fiber"
 import styled from "styled-components"
 import { Controls } from "../components/3d/controls"
@@ -6,6 +6,7 @@ import { SlotMachine } from "../components/3d/slotmachine/slotmachine"
 import { useWheels } from "../components/3d/wheel/useWheel"
 import { Wheel } from "../components/3d/wheel/wheel"
 import { Hud } from "../components/hud/hud"
+import { useGame } from "../features/game/hook"
 
 const CanvasWrapper = styled.div`
   height: 100vh;
@@ -21,11 +22,18 @@ const IndexPage = () => {
     2: 0,
   } as const)
   const { bind, goTo } = wheels
-  // useEffect(() => {
-  //   goTo(0)({ numberOfTurn: 1, value: 0 })
-  //   goTo(1)({ numberOfTurn: 6, value: 5 })
-  //   goTo(2)({ numberOfTurn: 7, value: 2 })
-  // }, [])
+  const { rolls } = useGame()
+  useEffect(() => {
+    rolls.forEach((roll, index) => {
+      goTo(index as any)({
+        numberOfTurn: roll.turn,
+        value: roll.value,
+      })
+    })
+    //   goTo(0)({ numberOfTurn: 1, value: 0 })
+    //   goTo(1)({ numberOfTurn: 6, value: 5 })
+    //   goTo(2)({ numberOfTurn: 7, value: 2 })
+  }, [rolls])
   return (
     <CanvasWrapper>
       <Canvas camera={{ fov: 45, position: [0, 0, 300], near: 1, far: 1000 }}>
