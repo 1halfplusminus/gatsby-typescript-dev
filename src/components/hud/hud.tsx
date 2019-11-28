@@ -1,11 +1,12 @@
 import React from "react"
 import styled, { css } from "styled-components"
-import { useGame } from "../../features/game/hook"
 import { Box } from "../core/box"
 import { Button } from "../core/button"
 
-export const Hud = () => {
-  const { start } = useGame()
+export interface HudProps {
+  start: () => void
+}
+export const Hud = ({ start }: HudProps) => {
   return (
     <>
       <UpperLeft />

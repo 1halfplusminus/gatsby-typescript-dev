@@ -34,9 +34,10 @@
     "donjayamanne.githistory",
     "prisma.vscode-graphql",
     "steoates.autoimport",
-    "christian-kohler.path-intellisense"
+    "christian-kohler.path-intellisense",
+    "cesium.gltf-vscode"
   ],
-  "appPort": [6006],
+  "appPort": [6006, 8000],
   // Copy the contents to the correct location and set permissions
   "postCreateCommand": "mkdir -p ~/.ssh && cp -r /tmp/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*"
 }

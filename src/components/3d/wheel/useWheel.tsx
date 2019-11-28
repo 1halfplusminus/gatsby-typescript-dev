@@ -5,13 +5,13 @@ const useWheel = (
   {
     value: defaultValue,
   }: {
-    value: WheelValue
+    value: WheelValue | number
   } = { value: 0 }
 ) => {
-  const [value, setValue] = useState<WheelValue>(defaultValue)
+  const [value, setValue] = useState<WheelValue | number>(defaultValue)
   const [{ numberOfTurn, value: goToValue }, setGo] = useState<{
     numberOfTurn: number
-    value: WheelValue
+    value: WheelValue | number
   }>({
     numberOfTurn: 0,
     value: 0,
@@ -27,7 +27,7 @@ const useWheel = (
       value: sgoToValue,
       numberOfTurn: shadowNumberOfTurn,
     }: {
-      value: WheelValue
+      value: WheelValue | number
       numberOfTurn: number
     }) => {
       setGo({
@@ -43,9 +43,10 @@ const useWheel = (
 }
 export function useWheels<
   T extends {
-    [key: number]: WheelValue
-  }
->(wheels: T) {
+    [key: number]: G
+  },
+  G extends WheelValue | number,
+  >(wheels: T) {
   const states = Object.values(wheels).reduce(
     (p, c, index) => {
       p[index] = useWheel({ value: c })
@@ -57,13 +58,13 @@ export function useWheels<
   )
   return {
     ...states,
-    goTo: (p: keyof typeof states) => {
+    goTo: (p: keyof typeof states | number) => {
       return states[p].goTo
     },
-    get: (p: keyof typeof states) => {
+    get: (p: keyof typeof states | number) => {
       return states[p]
     },
-    bind: (p: keyof typeof states) => {
+    bind: (p: keyof typeof states | number) => {
       return {
         index: p,
         goTo: {

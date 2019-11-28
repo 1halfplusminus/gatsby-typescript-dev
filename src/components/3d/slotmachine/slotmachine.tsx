@@ -25,8 +25,8 @@ export const SlotMachine = () => {
   const { texture } = useTexture()
   const { mesh, bind } = useMesh()
   return (
-    <mesh ref={bind} position={[-5, 0, 5]}>
-      <boxBufferGeometry attach="geometry" args={[100, 100, 20]} />
+    <mesh ref={bind} position={[-10, 0, 0]}>
+      <boxBufferGeometry attach="geometry" args={[100, 100, 10]} />
       <meshBasicMaterial attach="material" map={texture} />
     </mesh>
   )

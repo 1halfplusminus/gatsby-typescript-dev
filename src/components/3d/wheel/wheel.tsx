@@ -60,7 +60,7 @@ export const Wheel = ({
   }
   const [finished, setFinished] = useState(false)
   useFrame(() => {
-    if (rotation.current !== 0) {
+    if (ref.current && rotation.current !== 0) {
       ref.current.rotation.x -= rotationPerFrame
       rotation.current = Math.min(rotation.current + rotationPerFrame, 0)
       if (rotation.current === 0) {
@@ -79,12 +79,12 @@ export const Wheel = ({
   return (
     <mesh
       ref={ref}
-      position={[(size + 5) * index - 30, 0, 0]}
+      position={[size * index - 30, 0, 0]}
       rotation={[getAngleForValue(value), 0, Math.PI / 2]}
     >
       <cylinderBufferGeometry
         attach="geometry"
-        args={[size, size, size, 28, 1, false, -rotationPerFace / 2]}
+        args={[size, size, size, 18, 1, false, -rotationPerFace / 2]}
       />
       <meshBasicMaterial attach="material" map={texture} />
     </mesh>

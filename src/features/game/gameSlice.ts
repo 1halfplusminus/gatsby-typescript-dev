@@ -25,13 +25,15 @@ export const game = createSlice({
   initialState,
   reducers: {
     startGame(state) {
-      state.playing = true
-      state.loading = true
-      state.rolls = [
-        { turn: 99999, value: 0 },
-        { turn: 99999, value: 0 },
-        { turn: 99999, value: 0 },
-      ]
+      if (!state.loading) {
+        state.playing = true
+        state.loading = true
+        state.rolls = [
+          { turn: 1, value: 6 },
+          { turn: 2, value: 5 },
+          { turn: 3, value: 0 },
+        ]
+      }
     },
     rollDice(state, action: PayloadAction<[GameRoll, GameRoll, GameRoll]>) {
       state.rolls = action.payload
