@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "./../../app/rootReducer"
-import { startGame } from "./gameSlice"
+import { rollFinished, startGame } from "./gameSlice"
 
 export const useGame = () => {
   const { rolls } = useSelector((state: RootState) => ({
@@ -12,5 +12,8 @@ export const useGame = () => {
     start: () => {
       dispatcher(startGame())
     },
+    rollFinished: () => {
+      dispatcher(rollFinished());
+    }
   }
 }

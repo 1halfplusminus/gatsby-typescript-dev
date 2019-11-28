@@ -9,6 +9,7 @@ const useWheel = (
   } = { value: 0 }
 ) => {
   const [value, setValue] = useState<WheelValue | number>(defaultValue)
+  const [finished, setFinished] = useState(true)
   const [{ numberOfTurn, value: goToValue }, setGo] = useState<{
     numberOfTurn: number
     value: WheelValue | number
@@ -20,6 +21,7 @@ const useWheel = (
     setValue(defaultValue)
   }, [defaultValue])
   return {
+    finished,
     numberOfTurn,
     goToValue,
     value,
@@ -30,35 +32,49 @@ const useWheel = (
       value: WheelValue | number
       numberOfTurn: number
     }) => {
-      setGo({
-        numberOfTurn: shadowNumberOfTurn,
-        value: sgoToValue,
-      })
-      setValue(goToValue)
+      if (finished) {
+        setFinished(false);
+        setGo({
+          numberOfTurn: shadowNumberOfTurn,
+          value: sgoToValue,
+        })
+        setValue(goToValue)
+      }
+
     },
-    handleFinish: () => () => {
+    handleFinish: () => {
+      setFinished(true);
       setValue(goToValue)
     },
   }
 }
-export function useWheels<
+interface UseWeelsProps<
+  G extends WheelValue | number = number,
   T extends {
     [key: number]: G
+  } = {
+    [key: number]: G
   },
-  G extends WheelValue | number,
-  >(wheels: T) {
+  > {
+  onRollFinish: () => void
+  wheels: T
+}
+export function useWheels({ wheels, onRollFinish }: UseWeelsProps) {
+  const [finished, setFinished] = useState(true)
+  const [touched, setTouched] = useState(false)
   const states = Object.values(wheels).reduce(
     (p, c, index) => {
       p[index] = useWheel({ value: c })
       return p
     },
     {} as {
-      [K in keyof T]: ReturnType<typeof useWheel>
+      [key: number]: ReturnType<typeof useWheel>
     }
   )
   return {
     ...states,
     goTo: (p: keyof typeof states | number) => {
+      setTouched(true);
       return states[p].goTo
     },
     get: (p: keyof typeof states | number) => {
@@ -72,7 +88,19 @@ export function useWheels<
           numberOfTurn: states[p].numberOfTurn,
         },
         value: states[p].value,
+        onFinish: () => {
+          states[p].handleFinish()
+          const arrayStates = Object.values(states);
+          const checkAll = arrayStates.slice(0, arrayStates.length - 1).map((s) => s.finished).every((v) => v)
+          setFinished(checkAll)
+          if (checkAll) {
+            onRollFinish();
+          }
+        },
+        finished: states[p].finished
       }
     },
+    finished,
+    touched
   }
 }

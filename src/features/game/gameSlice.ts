@@ -3,20 +3,22 @@ import { WheelValue } from "../../components/3d/wheel/wheel"
 
 export interface GameRoll {
   turn: number
-  value: WheelValue
+  value: WheelValue | number
 }
 
 interface GameState {
-  rolls: readonly [GameRoll, GameRoll, GameRoll] | readonly []
+  rolls: [GameRoll, GameRoll, GameRoll] | []
   playing: boolean
   loading: boolean
   error: string | null
+  rolling: boolean;
 }
 
 const initialState: GameState = {
-  rolls: [] as const,
+  rolls: [],
   playing: false,
   loading: false,
+  rolling: false,
   error: null,
 }
 
@@ -25,13 +27,13 @@ export const game = createSlice({
   initialState,
   reducers: {
     startGame(state) {
-      if (!state.loading) {
+      if (!state.loading && !state.rolling) {
         state.playing = true
         state.loading = true
         state.rolls = [
-          { turn: 1, value: 6 },
-          { turn: 2, value: 5 },
-          { turn: 3, value: 0 },
+          { turn: 1, value: Math.floor(Math.random() * 6) + 1 },
+          { turn: 2, value: Math.floor(Math.random() * 6) + 1 },
+          { turn: 3, value: Math.floor(Math.random() * 6) + 1 },
         ]
       }
     },
@@ -39,9 +41,14 @@ export const game = createSlice({
       state.rolls = action.payload
       state.loading = false
     },
+    rollFinished(state) {
+      state.rolling = false;
+      state.loading = false;
+      state.rolls = [];
+    }
   },
 })
 
-export const { startGame, rollDice } = game.actions
+export const { startGame, rollDice, rollFinished } = game.actions
 
 export default game.reducer

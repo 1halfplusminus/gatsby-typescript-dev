@@ -4,15 +4,14 @@ import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 
 interface WheelProps {
   index: number
-  goTo:
-  | {
+  goTo: {
     numberOfTurn: number
     value: number
   }
-  | false
   size?: number
   value?: number
   onFinish?: (value: number) => void
+  finished: boolean
 }
 
 export const useModel = () => {
@@ -54,7 +53,7 @@ type UseRowProps = {
   goTo: GoTo
 } & WheelProps
 
-const useRow = ({ row, goTo, value }: UseRowProps) => {
+const useRow = ({ row, goTo, value, onFinish, finished }: UseRowProps) => {
   const symbols = [-1.49799, -1.74799, -1.998, -2.248, -2.508, -2.728, -2.968, -3.228]
   const translation = useRef<number>(0)
   const { current: speed } = useRef<number>((Math.random() * 0.0076) + 0.0075)
@@ -78,10 +77,14 @@ const useRow = ({ row, goTo, value }: UseRowProps) => {
     return 0
   }
   useFrame(() => {
-    if (row && goTo && translation && translation.current < 0) {
+    if (row && translation && translation.current < 0) {
       if (turn === goTo.numberOfTurn && symbol === goTo.value) {
         row.position.y = Math.max(row.position.y - 0.006, symbols[goTo.value])
         setSymbol(goTo.value);
+        if (onFinish && row.position.y === symbols[goTo.value]) {
+          translation.current = 0
+          onFinish(goTo.value);
+        }
         return;
       }
       row.position.y -= speed
@@ -99,12 +102,12 @@ const useRow = ({ row, goTo, value }: UseRowProps) => {
     }
   })
   useEffect(() => {
-    if (goTo) {
+    if (goTo.numberOfTurn && goTo.value && finished === false) {
       setTurn(0);
       setSymbol(0);
       translation.current = calculeTransalation()
     }
-  }, [goTo])
+  }, [goTo.numberOfTurn, goTo.value, finished])
   useEffect(() => {
     if (row && value) {
       row.position.y = symbols[value]

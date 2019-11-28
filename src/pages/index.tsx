@@ -15,13 +15,19 @@ const CanvasWrapper = styled.div`
 `
 
 const IndexPage = () => {
+  const { rolls, rollFinished } = useGame()
   const wheels = useWheels({
-    0: 0,
-    1: 3,
-    2: 4,
-  } as const)
+    wheels: {
+      0: 0,
+      1: 3,
+      2: 4,
+    },
+    onRollFinish: () => {
+      rollFinished()
+    }
+  })
   const { bind, goTo } = wheels
-  const { rolls } = useGame()
+
   useEffect(() => {
     rolls.forEach((roll, index) => {
       setTimeout(() => {
