@@ -1,8 +1,10 @@
+import * as option from "fp-ts/lib/Option"
+import { pipe } from "fp-ts/lib/pipeable"
+import { once } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
 import { useFrame } from "react-three-fiber"
-import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
-
-interface WheelProps {
+import { Mesh } from "../../../features/scenegraph/components/mesh"
+export interface WheelProps {
   index: number
   goTo: {
     numberOfTurn: number
@@ -12,130 +14,142 @@ interface WheelProps {
   value?: number
   onFinish?: (value: number) => void
   finished: boolean
+  rolling: boolean
+  loading: boolean
 }
-
-export const useModel = () => {
-  const ref = useRef<GLTF | null>(null)
-  const slotMachineRef = useRef<THREE.Object3D | null>(null)
-  const backgroundRef = useRef<THREE.Object3D | null>(null)
-  const rowsRef = useRef<
-    [THREE.Object3D, THREE.Object3D, THREE.Object3D] | THREE.Object3D[]
-  >([])
-  const { current: glft } = ref
-  const [loaded, setLoaded] = useState(false)
-  useEffect(() => {
-    new GLTFLoader().load(require("./slotscene.glb"), loadedAsset => {
-      ref.current = loadedAsset
-      slotMachineRef.current = loadedAsset.scene.getObjectByName("SlotMachine")!
-      backgroundRef.current = loadedAsset.scene.getObjectByName("Background")!
-      rowsRef.current = [
-        loadedAsset.scene.getObjectByName("Row1")!,
-        loadedAsset.scene.getObjectByName("Row2")!,
-        loadedAsset.scene.getObjectByName("Row3")!,
-      ]
-      setLoaded(true)
-    })
-  }, [])
-  return {
-    glft,
-    slotMachine: slotMachineRef.current,
-    background: backgroundRef.current,
-    rows: rowsRef.current!,
-  }
-}
-
-export type GoTo = {
-  numberOfTurn: number
-  value: number
-} | false
+export type GoTo =
+  | {
+      numberOfTurn: number
+      value: number
+    }
+  | false
 type UseRowProps = {
-  row: THREE.Object3D,
+  row: option.Option<THREE.Object3D>
   goTo: GoTo
+  rolling: boolean
+  loading: boolean
 } & WheelProps
 
-const useRow = ({ row, goTo, value, onFinish, finished }: UseRowProps) => {
-  const symbols = [-1.49799, -1.74799, -1.998, -2.248, -2.508, -2.728, -2.968, -3.228]
-  const translation = useRef<number>(0)
-  const { current: speed } = useRef<number>((Math.random() * 0.0076) + 0.0075)
+const useRow = ({
+  row: someRow,
+  goTo,
+  value,
+  onFinish,
+  rolling,
+  loading,
+}: UseRowProps) => {
+  const symbols = [
+    1.16785,
+    0.90785,
+    0.60785,
+    0.30785,
+    0.02785,
+    -0.27215,
+    -0.54215,
+    -0.85215,
+  ]
+  const { current: speed } = useRef<number>(0.025)
   const lastSymbol = () => {
-    return symbols[symbols.length - 1];
+    return symbols[symbols.length - 1]
   }
-  const [turn, setTurn] = useState(0);
-  const [symbol, setSymbol] = useState(value || 0);
-  const firstSymbol = () => {
-    return symbols[0];
-  }
-  const calculeTransalation = () => {
-    if (goTo) {
-      if (goTo.numberOfTurn === 0 && goTo.value === 0) {
-        return 0;
-      }
-      return (
-        ((lastSymbol() - firstSymbol()) * goTo.numberOfTurn) + symbols[goTo.value]
-      )
-    }
-    return 0
-  }
+  const [turn, setTurn] = useState(0)
+  const [symbol, setSymbol] = useState(0)
+  const { current: update } = useRef(
+    once((row: any) => {
+      row.position.y = value ? symbols[value] : symbols[0]
+    })
+  )
+  const [finished, setFinished] = useState(false)
   useFrame(() => {
-    if (row && translation && translation.current < 0) {
-      if (turn === goTo.numberOfTurn && symbol === goTo.value) {
-        row.position.y = Math.max(row.position.y - 0.006, symbols[goTo.value])
-        setSymbol(goTo.value);
-        if (onFinish && row.position.y === symbols[goTo.value]) {
-          translation.current = 0
-          onFinish(goTo.value);
-        }
-        return;
-      }
-      row.position.y -= speed
-      translation.current += speed
-      if (row.position.y <= symbols[symbols.length - 1]) {
-        row.position.y = symbols[0]
-        setTurn(turn + 1);
-        setSymbol(0);
-        return;
-      }
-      if (row.position.y <= symbols[symbol] && row.position.y >= symbols[symbol + 1]) {
-        setSymbol(symbol + 1);
-      }
+    pipe(
+      someRow,
+      option.fold(
+        () => {},
+        row => {
+          const updateOnce = once(() => {
+            if (row.position.y - speed <= lastSymbol()) {
+              row.position.y = symbols[0]
+              setTurn(turn + 1)
+              setSymbol(0)
+              return
+            }
+            if (row.position.y - speed <= symbols[symbol + 1]) {
+              setSymbol(symbol + 1)
+              row.position.y = symbols[symbol + 1]
+              return
+            }
+            row.position.y -= speed
+          })
+          if (!rolling && !loading) {
+            update(row)
+            return
+          }
+          if (loading) {
+            updateOnce()
+            return
+          }
+          if (rolling && !finished) {
+            if (turn >= goTo.numberOfTurn && symbol === goTo.value) {
+              if (!finished) {
+                if (onFinish) {
+                  console.log(
+                    "finish",
+                    goTo.numberOfTurn,
+                    turn,
+                    goTo.value,
+                    symbol
+                  )
+                  onFinish(goTo.value)
+                }
 
-    }
+                setFinished(true)
+                return
+              }
+            }
+            updateOnce()
+          }
+        }
+      )
+    )
   })
   useEffect(() => {
-    if (goTo.numberOfTurn && goTo.value && finished === false) {
-      setTurn(0);
-      setSymbol(0);
-      translation.current = calculeTransalation()
+    setFinished(false)
+    setTurn(0)
+    setSymbol(0)
+  }, [rolling, loading])
+  /*  useEffect(() => {
+    if (value) {
+      pipe(
+        someRow,
+        option.fold(
+          () => {},
+          row => {
+            console.log("update value")
+            row.po
+            row.position.y = symbols[value]
+          }
+        )
+      )
     }
-  }, [goTo.numberOfTurn, goTo.value, finished])
-  useEffect(() => {
-    if (row && value) {
-      row.position.y = symbols[value]
-    }
-  }, [value, row])
+  }, [option.isSome(someRow), value])  */
 }
 
 export interface SlotMachineProps {
   wheels: WheelProps[]
+  rows: Array<option.Option<THREE.Object3D>>
 }
-export const SlotMachineGL = ({ wheels }: SlotMachineProps) => {
-  const { slotMachine, background, rows } = useModel()
-  useRow({ row: rows[0], ...wheels[0] })
-  useRow({ row: rows[1], ...wheels[1] })
-  useRow({ row: rows[2], ...wheels[2] })
+export const SlotMachineGL = ({ wheels, rows }: SlotMachineProps) => {
+  /*   useRow({ row: rows[1], ...wheels[1] }) */
+  /*   useRow({ row: rows[2], ...wheels[2] }) */
   return (
-    slotMachine && (
+    <>
       <group>
-        <mesh>
-          <primitive object={background} />
-        </mesh>
-        <mesh>
-          <primitive object={slotMachine} />
-        </mesh>
-        {rows.map((row, i) => (
-          <primitive key={i} object={row} />
-        ))}
+        <Mesh objectKey="Background" />
+        <Mesh objectKey="SlotMachine" />
+        <Mesh objectKey="Row1" {...useRow({ row: rows[0], ...wheels[0] })} />
+        <Mesh objectKey="Row2" {...useRow({ row: rows[1], ...wheels[1] })} />
+        <Mesh objectKey="Row3" {...useRow({ row: rows[2], ...wheels[2] })} />
       </group>
-    )
+    </>
   )
 }

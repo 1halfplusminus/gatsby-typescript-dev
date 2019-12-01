@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { GameRoll } from "../../../features/game/gameSlice"
 import { WheelValue } from "./wheel"
 
 const useWheel = (
@@ -9,7 +10,8 @@ const useWheel = (
   } = { value: 0 }
 ) => {
   const [value, setValue] = useState<WheelValue | number>(defaultValue)
-  const [finished, setFinished] = useState(true)
+  const [finished, setFinished] = useState(false)
+  const [touched, setTouched] = useState(false)
   const [{ numberOfTurn, value: goToValue }, setGo] = useState<{
     numberOfTurn: number
     value: WheelValue | number
@@ -32,19 +34,22 @@ const useWheel = (
       value: WheelValue | number
       numberOfTurn: number
     }) => {
-      if (finished) {
-        setFinished(false);
+      if (!touched) {
+        setTouched(true)
+        setFinished(false)
         setGo({
           numberOfTurn: shadowNumberOfTurn,
           value: sgoToValue,
         })
-        setValue(goToValue)
       }
-
     },
     handleFinish: () => {
-      setFinished(true);
+      setFinished(true)
       setValue(goToValue)
+    },
+    reset: () => {
+      setFinished(false)
+      setTouched(false)
     },
   }
 }
@@ -54,13 +59,21 @@ interface UseWeelsProps<
     [key: number]: G
   } = {
     [key: number]: G
-  },
-  > {
+  }
+> {
   onRollFinish: () => void
   wheels: T
+  rolls: GameRoll[]
+  rolling: boolean
+  loading: boolean
 }
-export function useWheels({ wheels, onRollFinish }: UseWeelsProps) {
-  const [finished, setFinished] = useState(true)
+export function useWheels({
+  wheels,
+  onRollFinish,
+  rolls,
+  rolling,
+  loading,
+}: UseWeelsProps) {
   const [touched, setTouched] = useState(false)
   const states = Object.values(wheels).reduce(
     (p, c, index) => {
@@ -71,10 +84,34 @@ export function useWheels({ wheels, onRollFinish }: UseWeelsProps) {
       [key: number]: ReturnType<typeof useWheel>
     }
   )
+  const finished = useMemo(() => {
+    return Object.values(states).map(s => s.finished)
+  }, [states])
+  useEffect(() => {
+    if (finished.every(f => f)) {
+      Object.values(states).forEach(s => {
+        s.reset()
+      })
+      onRollFinish()
+    }
+  }, [finished])
+
+  useEffect(() => {
+    if (rolling) {
+      rolls.forEach((roll, index) => {
+        setTimeout(() => {
+          states[index].goTo({
+            numberOfTurn: roll.turn,
+            value: roll.value,
+          })
+        }, index * 1000)
+      })
+    }
+  }, [rolls, rolling])
   return {
     ...states,
     goTo: (p: keyof typeof states | number) => {
-      setTouched(true);
+      setTouched(true)
       return states[p].goTo
     },
     get: (p: keyof typeof states | number) => {
@@ -90,17 +127,12 @@ export function useWheels({ wheels, onRollFinish }: UseWeelsProps) {
         value: states[p].value,
         onFinish: () => {
           states[p].handleFinish()
-          const arrayStates = Object.values(states);
-          const checkAll = arrayStates.slice(0, arrayStates.length - 1).map((s) => s.finished).every((v) => v)
-          setFinished(checkAll)
-          if (checkAll) {
-            onRollFinish();
-          }
         },
-        finished: states[p].finished
+        finished: states[p].finished,
+        rolling,
+        loading,
       }
     },
-    finished,
-    touched
+    touched,
   }
 }

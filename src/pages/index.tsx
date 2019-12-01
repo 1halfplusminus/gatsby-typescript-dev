@@ -1,11 +1,20 @@
-import React, { Suspense, useEffect } from "react"
+import React, { Suspense } from "react"
+import { Provider } from "react-redux"
 import { Canvas } from "react-three-fiber"
-import styled from "styled-components"
-import { Controls } from "../components/3d/controls"
-import { SlotMachineGL } from "../components/3d/slotmachinegl/slotmachinegl"
+import styled, { createGlobalStyle } from "styled-components"
+import store from "../app/store"
 import { useWheels } from "../components/3d/wheel/useWheel"
 import { ConnectedHud } from "../features/game/components/hud"
 import { useGame } from "../features/game/hook"
+import { SceneGraphProvider } from "../features/scenegraph/components/provider"
+import SlotMachine from "../features/scenegraph/components/slotmachine"
+
+const GlobalStyle = createGlobalStyle`
+  html,body {
+    margin: 0;
+    overflow: hidden;
+  }
+`
 
 const CanvasWrapper = styled.div`
   height: 100vh;
@@ -15,31 +24,25 @@ const CanvasWrapper = styled.div`
 `
 
 const IndexPage = () => {
-  const { rolls, rollFinished } = useGame()
+  const { rolls, rollFinished, rolling, loading } = useGame()
   const wheels = useWheels({
     wheels: {
-      0: 0,
-      1: 3,
-      2: 4,
+      0: 7,
+      1: 7,
+      2: 7,
     },
     onRollFinish: () => {
       rollFinished()
-    }
+    },
+    rolls,
+    rolling,
+    loading,
   })
-  const { bind, goTo } = wheels
+  const { bind } = wheels
 
-  useEffect(() => {
-    rolls.forEach((roll, index) => {
-      setTimeout(() => {
-        goTo(index)({
-          numberOfTurn: roll.turn,
-          value: roll.value,
-        })
-      }, index * 1000)
-    })
-  }, [rolls])
   return (
     <CanvasWrapper>
+      <GlobalStyle />
       <Canvas
         onCreated={({ gl }) => {
           gl.localClippingEnabled = true
@@ -47,20 +50,18 @@ const IndexPage = () => {
         camera={{ fov: 45, position: [0, 0, 3], near: 1, far: 1000 }}
       >
         <Suspense fallback={null}>
-          <SlotMachineGL wheels={[bind(0), bind(1), bind(2)]} />
-          {/* <Wheel {...bind(0)} /> */}
-
-          {/* <Wheel {...bind(1)} />
-          <Wheel {...bind(2)} /> */}
-          {/* <SlotMachine /> */}
+          <Provider store={store}>
+            <SceneGraphProvider>
+              <SlotMachine wheels={[bind(0), bind(1), bind(2)]} />
+            </SceneGraphProvider>
+          </Provider>
         </Suspense>
-
         <spotLight
           args={["0xffffff"]}
           position={[20, 50, 100]}
           castShadow={true}
         />
-        <Controls
+        {/*         <Controls
           autoRotate={false}
           enablePan={true}
           enableZoom={true}
@@ -70,7 +71,7 @@ const IndexPage = () => {
           rotateSpeed={1}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
-        />
+        /> */}
       </Canvas>
       <ConnectedHud />
     </CanvasWrapper>

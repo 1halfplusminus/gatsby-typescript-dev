@@ -1,19 +1,24 @@
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "./../../app/rootReducer"
-import { rollFinished, startGame } from "./gameSlice"
+import { playSaga } from './actions'
+import { rollFinished } from "./gameSlice"
 
 export const useGame = () => {
-  const { rolls } = useSelector((state: RootState) => ({
+  const { rolls, rolling, loading } = useSelector((state: RootState) => ({
     rolls: state.game.rolls,
+    rolling: state.game.rolling,
+    loading: state.game.loading,
   }))
-  const dispatcher = useDispatch()
+  const dispatch = useDispatch()
   return {
     rolls,
     start: () => {
-      dispatcher(startGame())
+      dispatch(playSaga())
     },
     rollFinished: () => {
-      dispatcher(rollFinished());
-    }
+      dispatch(rollFinished());
+    },
+    rolling,
+    loading
   }
 }

@@ -6,10 +6,14 @@
 
 // You can delete this file if you're not using it
 // gatsby-ssr.js
-import React, { ReactChild } from "react";
-import { ThemeProvider } from "styled-components";
-import theme from "./src/theme";
+import React, { ReactChild } from "react"
+import { Provider } from "react-redux"
+import { ThemeProvider } from "styled-components"
+import store from "./src/app/store"
+import theme from "./src/theme"
 
 export const wrapRootElement = ({ element }: { element: ReactChild }) => (
-  <ThemeProvider theme={theme}>{element}</ThemeProvider>
-);
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>{element}</ThemeProvider>
+  </Provider>
+)

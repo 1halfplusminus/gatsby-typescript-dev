@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { Action, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { ThunkAction } from "redux-thunk"
 import { WheelValue } from "../../components/3d/wheel/wheel"
 
 export interface GameRoll {
@@ -11,7 +12,7 @@ interface GameState {
   playing: boolean
   loading: boolean
   error: string | null
-  rolling: boolean;
+  rolling: boolean
 }
 
 const initialState: GameState = {
@@ -28,27 +29,30 @@ export const game = createSlice({
   reducers: {
     startGame(state) {
       if (!state.loading && !state.rolling) {
+        state.rolling = false
         state.playing = true
         state.loading = true
-        state.rolls = [
-          { turn: 1, value: Math.floor(Math.random() * 6) + 1 },
-          { turn: 2, value: Math.floor(Math.random() * 6) + 1 },
-          { turn: 3, value: Math.floor(Math.random() * 6) + 1 },
-        ]
+        state.rolls = []
       }
     },
     rollDice(state, action: PayloadAction<[GameRoll, GameRoll, GameRoll]>) {
-      state.rolls = action.payload
-      state.loading = false
+      if (!state.rolling) {
+        state.rolls = action.payload
+        state.loading = false
+        state.rolling = true
+      }
     },
     rollFinished(state) {
-      state.rolling = false;
-      state.loading = false;
-      state.rolls = [];
-    }
+      state.rolling = false
+      state.loading = false
+      state.playing = false
+      state.rolls = []
+    },
   },
 })
 
 export const { startGame, rollDice, rollFinished } = game.actions
+
+export type GameThunk = ThunkAction<void, GameState, null, Action<string>>
 
 export default game.reducer

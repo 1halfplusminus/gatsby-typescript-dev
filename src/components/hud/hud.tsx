@@ -1,7 +1,6 @@
 import React from "react"
 import styled, { css } from "styled-components"
 import { Box } from "../core/box"
-import { Button } from "../core/button"
 
 export interface HudProps {
   start: () => void
@@ -14,9 +13,9 @@ export const Hud = ({ start }: HudProps) => {
       <LowerLeft />
 
       <LowerRight justifyContent="center" alignItems="center" container={true}>
-        <Button onClick={start} color="white">
+        {/*     <Button onClick={start} color="white">
           Jouer
-        </Button>
+        </Button> */}
       </LowerRight>
     </>
   )
