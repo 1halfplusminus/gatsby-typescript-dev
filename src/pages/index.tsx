@@ -27,9 +27,9 @@ const IndexPage = () => {
   const { rolls, rollFinished, rolling, loading } = useGame()
   const wheels = useWheels({
     wheels: {
-      0: 7,
-      1: 7,
-      2: 7,
+      0: 3,
+      1: 5,
+      2: 6,
     },
     onRollFinish: () => {
       rollFinished()

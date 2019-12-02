@@ -99,12 +99,12 @@ export function useWheels({
   useEffect(() => {
     if (rolling) {
       rolls.forEach((roll, index) => {
-        setTimeout(() => {
+        if (roll.turn > 0) {
           states[index].goTo({
             numberOfTurn: roll.turn,
             value: roll.value,
           })
-        }, index * 1000)
+        }
       })
     }
   }, [rolls, rolling])

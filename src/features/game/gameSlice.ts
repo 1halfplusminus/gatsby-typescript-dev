@@ -46,7 +46,6 @@ export const game = createSlice({
       state.rolling = false
       state.loading = false
       state.playing = false
-      state.rolls = []
     },
   },
 })
