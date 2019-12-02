@@ -1,7 +1,6 @@
 import * as option from "fp-ts/lib/Option"
 import { pipe } from "fp-ts/lib/pipeable"
-import { once } from "lodash"
-import React, { useMemo, useRef, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { useFrame } from "react-three-fiber"
 import { Mesh } from "../../../features/scenegraph/components/mesh"
 export interface WheelProps {
@@ -53,11 +52,6 @@ const useRow = ({
   }
   const [turn, setTurn] = useState(0)
   const [symbol, setSymbol] = useState(0)
-  const { current: update } = useRef(
-    once((row: any) => {
-      row.position.y = value ? symbols[value] : symbols[0]
-    })
-  )
   const [finished, setFinished] = useState(false)
   useFrame((context, delta) => {
     pipe(
@@ -65,22 +59,22 @@ const useRow = ({
       option.fold(
         () => { },
         row => {
-          const speed = 0.05;
-          const updateOnce = once(() => {
-            if (row.position.y - speed <= lastSymbol()) {
-              row.position.y = symbols[0] + speed
-              if (rolling) {
-                setTurn(turn + 1)
-                setSymbol(0)
-              }
+          const speed = 2 * delta;
+          const updateOnce = () => {
+            if (row.position.y <= lastSymbol()) {
+              row.position.y = symbols[0]
+              setTurn(turn + 1)
+              setSymbol(0)
             }
-            if (row.position.y - speed <= symbols[symbol + 1]) {
-              if (rolling) {
-                setSymbol(symbol + 1)
-              }
+            if (row.position.y <= symbols[symbol + 1]) {
+              row.position.y = symbols[symbol + 1]
+              setSymbol(symbol + 1)
             }
             row.position.y -= speed
-          })
+          }
+          if (loading || rolling) {
+            updateOnce()
+          }
           if (
             turn === goTo.numberOfTurn &&
             symbol === goTo.value &&
@@ -89,26 +83,26 @@ const useRow = ({
           ) {
             setFinished(true)
           }
-          if (!rolling && !loading) {
-            update(row)
-            return
-          }
           if (finished) {
             if (onFinish) {
               onFinish(goTo.value)
             }
-            setFinished(false)
             setTurn(0)
             setSymbol(0)
-            return
+            setFinished(false)
+
           }
-          if (loading || rolling) {
-            updateOnce()
-          }
+
         }
       )
     )
   })
+  useEffect(() => {
+    if (rolling || loading) {
+      setTurn(0)
+      setSymbol(0)
+    }
+  }, [rolling, loading])
   const position = useMemo(
     () =>
       pipe(
@@ -116,11 +110,11 @@ const useRow = ({
         option.fold(
           () => [0, 0, 0],
           row => {
-            return [row.position.x, symbols[symbol], row.position.z]
+            return [row.position.x, symbols[value ? value : 0], row.position.z]
           }
         )
       ),
-    [loading, rolling, symbol, value, turn, option.isSome(someRow)]
+    [loading, rolling, value, option.isSome(someRow)]
   )
   return {
     position,
