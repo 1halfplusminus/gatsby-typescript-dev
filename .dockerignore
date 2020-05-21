@@ -6,3 +6,6 @@ node_modules
 .history
 public
 storybook-static
+gatsby-browser.js
+gatsby-node.js
+gatsby-ssr.js

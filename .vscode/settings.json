@@ -1,5 +1,8 @@
 {
-  "files.exclude": {},
+  "files.exclude": {
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/*?.js": { "when": "$(basename).tsx" }
+  },
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.organizeImports": true,

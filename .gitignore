@@ -70,3 +70,8 @@ yarn-error.log
 
 .history
 storybook-static
+gatsby-browser.js
+gatsby-node.js
+gatsby-ssr.js
+graphqlTypes.js
+src/theme/index.js
